@@ -1,2 +1,2 @@
 # YuuyaPad
-YuuyaPad aims to be a multifunctional notepad.
+YuuyaPad is planned to be a multi-functional notepad written in C#.
