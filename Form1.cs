@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace YuuyaPad
@@ -15,6 +9,16 @@ namespace YuuyaPad
         public Form1()
         {
             InitializeComponent();
+        }
+
+        private void menuItem7_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void menuItem5_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://github.com/YuuyaPad/YuuyaPad");
         }
     }
 }

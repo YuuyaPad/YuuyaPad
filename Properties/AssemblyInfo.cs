@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("YuuyaPad")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Main PC")]
+[assembly: AssemblyCompany("Yuuya")]
 [assembly: AssemblyProduct("YuuyaPad")]
-[assembly: AssemblyCopyright("Copyright © Main PC 2025")]
+[assembly: AssemblyCopyright("Copyright © 2020-2025 Yuuya")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
