@@ -32,23 +32,29 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.mainMenu1 = new System.Windows.Forms.MainMenu(this.components);
             this.menuItem1 = new System.Windows.Forms.MenuItem();
-            this.menuItem2 = new System.Windows.Forms.MenuItem();
-            this.menuItem3 = new System.Windows.Forms.MenuItem();
-            this.menuItem4 = new System.Windows.Forms.MenuItem();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
-            this.menuItem5 = new System.Windows.Forms.MenuItem();
-            this.menuItem6 = new System.Windows.Forms.MenuItem();
-            this.menuItem7 = new System.Windows.Forms.MenuItem();
             this.menuItem8 = new System.Windows.Forms.MenuItem();
             this.menuItem9 = new System.Windows.Forms.MenuItem();
             this.menuItem10 = new System.Windows.Forms.MenuItem();
             this.menuItem11 = new System.Windows.Forms.MenuItem();
             this.menuItem12 = new System.Windows.Forms.MenuItem();
+            this.menuItem18 = new System.Windows.Forms.MenuItem();
+            this.menuItem20 = new System.Windows.Forms.MenuItem();
+            this.menuItem19 = new System.Windows.Forms.MenuItem();
             this.menuItem13 = new System.Windows.Forms.MenuItem();
             this.menuItem14 = new System.Windows.Forms.MenuItem();
             this.menuItem15 = new System.Windows.Forms.MenuItem();
+            this.menuItem2 = new System.Windows.Forms.MenuItem();
+            this.menuItem3 = new System.Windows.Forms.MenuItem();
             this.menuItem16 = new System.Windows.Forms.MenuItem();
             this.menuItem17 = new System.Windows.Forms.MenuItem();
+            this.menuItem4 = new System.Windows.Forms.MenuItem();
+            this.menuItem5 = new System.Windows.Forms.MenuItem();
+            this.menuItem6 = new System.Windows.Forms.MenuItem();
+            this.menuItem7 = new System.Windows.Forms.MenuItem();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.statusBar1 = new System.Windows.Forms.StatusBar();
+            this.menuItem21 = new System.Windows.Forms.MenuItem();
+            this.menuItem22 = new System.Windows.Forms.MenuItem();
             this.SuspendLayout();
             // 
             // mainMenu1
@@ -69,10 +75,84 @@
             this.menuItem10,
             this.menuItem11,
             this.menuItem12,
+            this.menuItem18,
+            this.menuItem20,
+            this.menuItem19,
             this.menuItem13,
             this.menuItem14,
+            this.menuItem21,
             this.menuItem15});
             this.menuItem1.Text = "ファイル(&F)";
+            // 
+            // menuItem8
+            // 
+            this.menuItem8.Index = 0;
+            this.menuItem8.Shortcut = System.Windows.Forms.Shortcut.CtrlN;
+            this.menuItem8.Text = "新規(&N)";
+            this.menuItem8.Click += new System.EventHandler(this.menuItem8_Click);
+            // 
+            // menuItem9
+            // 
+            this.menuItem9.Index = 1;
+            this.menuItem9.Shortcut = System.Windows.Forms.Shortcut.CtrlO;
+            this.menuItem9.Text = "開く(&O)...";
+            this.menuItem9.Click += new System.EventHandler(this.menuItem9_Click);
+            // 
+            // menuItem10
+            // 
+            this.menuItem10.Index = 2;
+            this.menuItem10.Shortcut = System.Windows.Forms.Shortcut.CtrlS;
+            this.menuItem10.Text = "保存(&S)...";
+            this.menuItem10.Click += new System.EventHandler(this.menuItem10_Click);
+            // 
+            // menuItem11
+            // 
+            this.menuItem11.Index = 3;
+            this.menuItem11.Shortcut = System.Windows.Forms.Shortcut.CtrlShiftS;
+            this.menuItem11.Text = "上書き保存(A)...";
+            this.menuItem11.Click += new System.EventHandler(this.menuItem11_Click);
+            // 
+            // menuItem12
+            // 
+            this.menuItem12.Index = 4;
+            this.menuItem12.Text = "-";
+            // 
+            // menuItem18
+            // 
+            this.menuItem18.Index = 5;
+            this.menuItem18.Shortcut = System.Windows.Forms.Shortcut.CtrlP;
+            this.menuItem18.Text = "印刷(&P)..";
+            this.menuItem18.Click += new System.EventHandler(this.menuItem18_Click);
+            // 
+            // menuItem20
+            // 
+            this.menuItem20.Index = 6;
+            this.menuItem20.Text = "印刷プレビュー(&R)";
+            this.menuItem20.Click += new System.EventHandler(this.menuItem20_Click);
+            // 
+            // menuItem19
+            // 
+            this.menuItem19.Index = 7;
+            this.menuItem19.Text = "-";
+            // 
+            // menuItem13
+            // 
+            this.menuItem13.Index = 8;
+            this.menuItem13.Shortcut = System.Windows.Forms.Shortcut.CtrlN;
+            this.menuItem13.Text = "新しいウインドウ(&W)";
+            this.menuItem13.Click += new System.EventHandler(this.menuItem13_Click);
+            // 
+            // menuItem14
+            // 
+            this.menuItem14.Index = 9;
+            this.menuItem14.Text = "-";
+            // 
+            // menuItem15
+            // 
+            this.menuItem15.Index = 11;
+            this.menuItem15.Shortcut = System.Windows.Forms.Shortcut.AltF4;
+            this.menuItem15.Text = "終了(&Q)";
+            this.menuItem15.Click += new System.EventHandler(this.menuItem15_Click);
             // 
             // menuItem2
             // 
@@ -82,82 +162,9 @@
             // menuItem3
             // 
             this.menuItem3.Index = 2;
+            this.menuItem3.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.menuItem22});
             this.menuItem3.Text = "表示(&V)";
-            // 
-            // menuItem4
-            // 
-            this.menuItem4.Index = 4;
-            this.menuItem4.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-            this.menuItem5,
-            this.menuItem6,
-            this.menuItem7});
-            this.menuItem4.Text = "ヘルプ(&H)";
-            // 
-            // richTextBox1
-            // 
-            this.richTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.richTextBox1.Location = new System.Drawing.Point(0, 0);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(670, 314);
-            this.richTextBox1.TabIndex = 1;
-            this.richTextBox1.Text = "";
-            // 
-            // menuItem5
-            // 
-            this.menuItem5.Index = 0;
-            this.menuItem5.Text = "GitHubページ(&P)";
-            this.menuItem5.Click += new System.EventHandler(this.menuItem5_Click);
-            // 
-            // menuItem6
-            // 
-            this.menuItem6.Index = 1;
-            this.menuItem6.Text = "-";
-            // 
-            // menuItem7
-            // 
-            this.menuItem7.Index = 2;
-            this.menuItem7.Text = "バージョン情報(&A)...";
-            this.menuItem7.Click += new System.EventHandler(this.menuItem7_Click);
-            // 
-            // menuItem8
-            // 
-            this.menuItem8.Index = 0;
-            this.menuItem8.Text = "新規(&N)";
-            // 
-            // menuItem9
-            // 
-            this.menuItem9.Index = 1;
-            this.menuItem9.Text = "開く(&O)...";
-            // 
-            // menuItem10
-            // 
-            this.menuItem10.Index = 2;
-            this.menuItem10.Text = "保存(&S)...";
-            // 
-            // menuItem11
-            // 
-            this.menuItem11.Index = 3;
-            this.menuItem11.Text = "上書き保存(A)...";
-            // 
-            // menuItem12
-            // 
-            this.menuItem12.Index = 4;
-            this.menuItem12.Text = "-";
-            // 
-            // menuItem13
-            // 
-            this.menuItem13.Index = 5;
-            this.menuItem13.Text = "新しいウインドウ(&W)";
-            // 
-            // menuItem14
-            // 
-            this.menuItem14.Index = 6;
-            this.menuItem14.Text = "-";
-            // 
-            // menuItem15
-            // 
-            this.menuItem15.Index = 7;
-            this.menuItem15.Text = "終了(&Q)";
             // 
             // menuItem16
             // 
@@ -170,12 +177,74 @@
             // 
             this.menuItem17.Index = 0;
             this.menuItem17.Text = "設定(&S)...";
+            this.menuItem17.Click += new System.EventHandler(this.menuItem17_Click);
+            // 
+            // menuItem4
+            // 
+            this.menuItem4.Index = 4;
+            this.menuItem4.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.menuItem5,
+            this.menuItem6,
+            this.menuItem7});
+            this.menuItem4.Text = "ヘルプ(&H)";
+            // 
+            // menuItem5
+            // 
+            this.menuItem5.Index = 0;
+            this.menuItem5.Shortcut = System.Windows.Forms.Shortcut.CtrlF1;
+            this.menuItem5.Text = "GitHubページ(&P)";
+            this.menuItem5.Click += new System.EventHandler(this.menuItem5_Click);
+            // 
+            // menuItem6
+            // 
+            this.menuItem6.Index = 1;
+            this.menuItem6.Text = "-";
+            // 
+            // menuItem7
+            // 
+            this.menuItem7.Index = 2;
+            this.menuItem7.Shortcut = System.Windows.Forms.Shortcut.F1;
+            this.menuItem7.Text = "バージョン情報(&A)...";
+            this.menuItem7.Click += new System.EventHandler(this.menuItem7_Click);
+            // 
+            // richTextBox1
+            // 
+            this.richTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.richTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.richTextBox1.Location = new System.Drawing.Point(0, 0);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.Size = new System.Drawing.Size(670, 314);
+            this.richTextBox1.TabIndex = 1;
+            this.richTextBox1.Text = "";
+            this.richTextBox1.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
+            // 
+            // statusBar1
+            // 
+            this.statusBar1.Location = new System.Drawing.Point(0, 292);
+            this.statusBar1.Name = "statusBar1";
+            this.statusBar1.Size = new System.Drawing.Size(670, 22);
+            this.statusBar1.TabIndex = 2;
+            this.statusBar1.Text = "text";
+            // 
+            // menuItem21
+            // 
+            this.menuItem21.Index = 10;
+            this.menuItem21.Shortcut = System.Windows.Forms.Shortcut.CtrlShiftW;
+            this.menuItem21.Text = "ウインドウを閉じる(&L)";
+            this.menuItem21.Click += new System.EventHandler(this.menuItem21_Click);
+            // 
+            // menuItem22
+            // 
+            this.menuItem22.Index = 0;
+            this.menuItem22.Text = "右から左に表示(&L)";
+            this.menuItem22.Click += new System.EventHandler(this.menuItem22_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(670, 314);
+            this.Controls.Add(this.statusBar1);
             this.Controls.Add(this.richTextBox1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Menu = this.mainMenu1;
@@ -206,6 +275,12 @@
         private System.Windows.Forms.MenuItem menuItem7;
         private System.Windows.Forms.MenuItem menuItem16;
         private System.Windows.Forms.MenuItem menuItem17;
+        private System.Windows.Forms.StatusBar statusBar1;
+        private System.Windows.Forms.MenuItem menuItem18;
+        private System.Windows.Forms.MenuItem menuItem20;
+        private System.Windows.Forms.MenuItem menuItem19;
+        private System.Windows.Forms.MenuItem menuItem21;
+        private System.Windows.Forms.MenuItem menuItem22;
     }
 }
 
