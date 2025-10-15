@@ -1,0 +1,37 @@
+name: Bug Report
+description: Report a bug in the YuuyaPad
+labels: ["bug"]
+body:
+  - type: input
+    id: operating_system
+    attributes:
+      label: Operating System
+      description: Please let me know in what environment this occurred.
+      placeholder: e.g. Windows 11 24H2
+    validations:
+      required: true
+
+  - type: input
+    id: program_version
+    attributes:
+      label: YuuyaPad Version
+      description: Please make sure you have the latest version, older versions may not be accepted.
+      placeholder: e.g. v1.0.0
+    validations:
+      required: true
+
+  - type: textarea
+    id: what_happened
+    attributes:
+      label: What happened?
+      description: Please describe the bug as specifically as possible.
+      placeholder: An exception occurs when trying to save.
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      options:
+        - label: There is no similar issue.
