@@ -109,7 +109,7 @@
             this.Name = "About";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
-            this.Text = "バージョン情報";
+            this.Text = "About YuuyaPad";
             this.ResumeLayout(false);
             this.PerformLayout();
 

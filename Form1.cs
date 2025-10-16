@@ -16,7 +16,7 @@ namespace YuuyaPad
         {
             // Get the number of characters
             int textLength = richTextBox1.TextLength;
-            statusBar1.Text = $"文字数: {textLength}";
+            statusBar1.Text = $"Character count: {textLength}";
         }
 
         private void richTextBox1_TextChanged(object sender, EventArgs e)
@@ -105,7 +105,8 @@ namespace YuuyaPad
 
         private void Placeholder()
         {
-            MessageBox.Show("この機能はまだ未完成です",
+            // Displayed when trying to access a feature under construction
+            MessageBox.Show("This feature is still under construction",
                 "YuuyaPad",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.None);
@@ -127,6 +128,12 @@ namespace YuuyaPad
                 richTextBox1.RightToLeft = RightToLeft.Yes; // Right to left like RTL languages
             else
                 richTextBox1.RightToLeft = RightToLeft.No; // Defaults
+        }
+
+        private void menuItem26_Click(object sender, EventArgs e)
+        {
+            // View YuuyaPad Home page
+            Process.Start("https://yuuyapad.github.io/");
         }
     }
 }

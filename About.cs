@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Reflection.Emit;
 using System.Reflection;
 using System.Windows.Forms;
 
@@ -17,7 +16,7 @@ namespace YuuyaPad
         {
             // Get app version from assembly information
             var version = Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "不明";
-            label2.Text = $"バージョン: {version}";
+            label2.Text = $"Version: {version}";
 
             // Copyright information (AssemblyInfo.cs or your own definition)
             var copyright = Assembly
@@ -30,7 +29,7 @@ namespace YuuyaPad
             var os = Environment.OSVersion;
             label4.Text = $"OS: {os.VersionString}";
 
-            label5.Text = "このアプリケーションは MIT ライセンスで提供されています。";
+            label5.Text = "This application is licensed under the MIT license.";
         }
 
         private void button1_Click(object sender, EventArgs e)

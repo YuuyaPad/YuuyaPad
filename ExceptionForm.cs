@@ -8,7 +8,7 @@ namespace CustomExceptionApp
         private readonly Exception _exception;
         private readonly string _context;
 
-        public ExceptionForm(Exception ex, string context = "例外が発生しました")
+        public ExceptionForm(Exception ex, string context = "An exception occurred")
         {
             InitializeComponent();
             _exception = ex;
@@ -30,7 +30,7 @@ namespace CustomExceptionApp
             catch
             {
                 // If you have problems copying to the clipboard
-                MessageBox.Show("クリップボードへのコピーに失敗しました。", "エラー",
+                MessageBox.Show("Copying to clipboard failed", "Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }

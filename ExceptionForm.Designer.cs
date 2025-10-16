@@ -35,9 +35,9 @@ namespace CustomExceptionApp
             this.lblContext.Font = new System.Drawing.Font("MS UI Gothic", 10F, System.Drawing.FontStyle.Bold);
             this.lblContext.Location = new System.Drawing.Point(12, 9);
             this.lblContext.Name = "lblContext";
-            this.lblContext.Size = new System.Drawing.Size(130, 14);
+            this.lblContext.Size = new System.Drawing.Size(164, 14);
             this.lblContext.TabIndex = 0;
-            this.lblContext.Text = "例外が発生しました:";
+            this.lblContext.Text = "An exception occurred:";
             // 
             // txtMessage
             // 
@@ -65,7 +65,7 @@ namespace CustomExceptionApp
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(100, 30);
             this.btnClose.TabIndex = 4;
-            this.btnClose.Text = "続行(&C)";
+            this.btnClose.Text = "&Continue";
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // btnCopy
@@ -74,7 +74,7 @@ namespace CustomExceptionApp
             this.btnCopy.Name = "btnCopy";
             this.btnCopy.Size = new System.Drawing.Size(100, 30);
             this.btnCopy.TabIndex = 3;
-            this.btnCopy.Text = "エラーをコピー(&O)";
+            this.btnCopy.Text = "Copy &Error";
             this.btnCopy.Click += new System.EventHandler(this.btnCopy_Click);
             // 
             // btnExit
@@ -83,7 +83,7 @@ namespace CustomExceptionApp
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(94, 30);
             this.btnExit.TabIndex = 5;
-            this.btnExit.Text = "終了(&Q)";
+            this.btnExit.Text = "&Quit";
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
             // ExceptionForm
@@ -100,7 +100,7 @@ namespace CustomExceptionApp
             this.MinimizeBox = false;
             this.Name = "ExceptionForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "例外が発生しました";
+            this.Text = "Exception occurred";
             this.ResumeLayout(false);
             this.PerformLayout();
 

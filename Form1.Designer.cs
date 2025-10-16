@@ -42,9 +42,11 @@
             this.menuItem19 = new System.Windows.Forms.MenuItem();
             this.menuItem13 = new System.Windows.Forms.MenuItem();
             this.menuItem14 = new System.Windows.Forms.MenuItem();
+            this.menuItem21 = new System.Windows.Forms.MenuItem();
             this.menuItem15 = new System.Windows.Forms.MenuItem();
             this.menuItem2 = new System.Windows.Forms.MenuItem();
             this.menuItem3 = new System.Windows.Forms.MenuItem();
+            this.menuItem22 = new System.Windows.Forms.MenuItem();
             this.menuItem16 = new System.Windows.Forms.MenuItem();
             this.menuItem17 = new System.Windows.Forms.MenuItem();
             this.menuItem4 = new System.Windows.Forms.MenuItem();
@@ -53,8 +55,10 @@
             this.menuItem7 = new System.Windows.Forms.MenuItem();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.statusBar1 = new System.Windows.Forms.StatusBar();
-            this.menuItem21 = new System.Windows.Forms.MenuItem();
-            this.menuItem22 = new System.Windows.Forms.MenuItem();
+            this.menuItem23 = new System.Windows.Forms.MenuItem();
+            this.menuItem24 = new System.Windows.Forms.MenuItem();
+            this.menuItem25 = new System.Windows.Forms.MenuItem();
+            this.menuItem26 = new System.Windows.Forms.MenuItem();
             this.SuspendLayout();
             // 
             // mainMenu1
@@ -82,34 +86,34 @@
             this.menuItem14,
             this.menuItem21,
             this.menuItem15});
-            this.menuItem1.Text = "ファイル(&F)";
+            this.menuItem1.Text = "&File";
             // 
             // menuItem8
             // 
             this.menuItem8.Index = 0;
             this.menuItem8.Shortcut = System.Windows.Forms.Shortcut.CtrlN;
-            this.menuItem8.Text = "新規(&N)";
+            this.menuItem8.Text = "&New";
             this.menuItem8.Click += new System.EventHandler(this.menuItem8_Click);
             // 
             // menuItem9
             // 
             this.menuItem9.Index = 1;
             this.menuItem9.Shortcut = System.Windows.Forms.Shortcut.CtrlO;
-            this.menuItem9.Text = "開く(&O)...";
+            this.menuItem9.Text = "&Open";
             this.menuItem9.Click += new System.EventHandler(this.menuItem9_Click);
             // 
             // menuItem10
             // 
             this.menuItem10.Index = 2;
             this.menuItem10.Shortcut = System.Windows.Forms.Shortcut.CtrlS;
-            this.menuItem10.Text = "保存(&S)...";
+            this.menuItem10.Text = "&Save";
             this.menuItem10.Click += new System.EventHandler(this.menuItem10_Click);
             // 
             // menuItem11
             // 
             this.menuItem11.Index = 3;
             this.menuItem11.Shortcut = System.Windows.Forms.Shortcut.CtrlShiftS;
-            this.menuItem11.Text = "上書き保存(A)...";
+            this.menuItem11.Text = "Save &As";
             this.menuItem11.Click += new System.EventHandler(this.menuItem11_Click);
             // 
             // menuItem12
@@ -121,13 +125,13 @@
             // 
             this.menuItem18.Index = 5;
             this.menuItem18.Shortcut = System.Windows.Forms.Shortcut.CtrlP;
-            this.menuItem18.Text = "印刷(&P)..";
+            this.menuItem18.Text = "&Print";
             this.menuItem18.Click += new System.EventHandler(this.menuItem18_Click);
             // 
             // menuItem20
             // 
             this.menuItem20.Index = 6;
-            this.menuItem20.Text = "印刷プレビュー(&R)";
+            this.menuItem20.Text = "Print P&review";
             this.menuItem20.Click += new System.EventHandler(this.menuItem20_Click);
             // 
             // menuItem19
@@ -139,7 +143,7 @@
             // 
             this.menuItem13.Index = 8;
             this.menuItem13.Shortcut = System.Windows.Forms.Shortcut.CtrlN;
-            this.menuItem13.Text = "新しいウインドウ(&W)";
+            this.menuItem13.Text = "New Win&dow";
             this.menuItem13.Click += new System.EventHandler(this.menuItem13_Click);
             // 
             // menuItem14
@@ -147,64 +151,81 @@
             this.menuItem14.Index = 9;
             this.menuItem14.Text = "-";
             // 
+            // menuItem21
+            // 
+            this.menuItem21.Index = 10;
+            this.menuItem21.Shortcut = System.Windows.Forms.Shortcut.CtrlShiftW;
+            this.menuItem21.Text = "&Close Window";
+            this.menuItem21.Click += new System.EventHandler(this.menuItem21_Click);
+            // 
             // menuItem15
             // 
             this.menuItem15.Index = 11;
             this.menuItem15.Shortcut = System.Windows.Forms.Shortcut.AltF4;
-            this.menuItem15.Text = "終了(&Q)";
+            this.menuItem15.Text = "&Quit";
             this.menuItem15.Click += new System.EventHandler(this.menuItem15_Click);
             // 
             // menuItem2
             // 
             this.menuItem2.Index = 1;
-            this.menuItem2.Text = "編集(&E)";
+            this.menuItem2.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.menuItem23,
+            this.menuItem24,
+            this.menuItem25});
+            this.menuItem2.Text = "&Edit";
             // 
             // menuItem3
             // 
             this.menuItem3.Index = 2;
             this.menuItem3.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.menuItem22});
-            this.menuItem3.Text = "表示(&V)";
+            this.menuItem3.Text = "&View";
+            // 
+            // menuItem22
+            // 
+            this.menuItem22.Index = 0;
+            this.menuItem22.Text = "Right to &left";
+            this.menuItem22.Click += new System.EventHandler(this.menuItem22_Click);
             // 
             // menuItem16
             // 
             this.menuItem16.Index = 3;
             this.menuItem16.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.menuItem17});
-            this.menuItem16.Text = "オプション(&O)";
+            this.menuItem16.Text = "&Options";
             // 
             // menuItem17
             // 
             this.menuItem17.Index = 0;
-            this.menuItem17.Text = "設定(&S)...";
+            this.menuItem17.Text = "&Settings...";
             this.menuItem17.Click += new System.EventHandler(this.menuItem17_Click);
             // 
             // menuItem4
             // 
             this.menuItem4.Index = 4;
             this.menuItem4.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.menuItem26,
             this.menuItem5,
             this.menuItem6,
             this.menuItem7});
-            this.menuItem4.Text = "ヘルプ(&H)";
+            this.menuItem4.Text = "&Help";
             // 
             // menuItem5
             // 
-            this.menuItem5.Index = 0;
-            this.menuItem5.Shortcut = System.Windows.Forms.Shortcut.CtrlF1;
-            this.menuItem5.Text = "GitHubページ(&P)";
+            this.menuItem5.Index = 1;
+            this.menuItem5.Text = "&GitHub Page";
             this.menuItem5.Click += new System.EventHandler(this.menuItem5_Click);
             // 
             // menuItem6
             // 
-            this.menuItem6.Index = 1;
+            this.menuItem6.Index = 2;
             this.menuItem6.Text = "-";
             // 
             // menuItem7
             // 
-            this.menuItem7.Index = 2;
+            this.menuItem7.Index = 3;
             this.menuItem7.Shortcut = System.Windows.Forms.Shortcut.F1;
-            this.menuItem7.Text = "バージョン情報(&A)...";
+            this.menuItem7.Text = "&About...";
             this.menuItem7.Click += new System.EventHandler(this.menuItem7_Click);
             // 
             // richTextBox1
@@ -213,6 +234,7 @@
             this.richTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.richTextBox1.Location = new System.Drawing.Point(0, 0);
             this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedBoth;
             this.richTextBox1.Size = new System.Drawing.Size(670, 314);
             this.richTextBox1.TabIndex = 1;
             this.richTextBox1.Text = "";
@@ -226,18 +248,26 @@
             this.statusBar1.TabIndex = 2;
             this.statusBar1.Text = "text";
             // 
-            // menuItem21
+            // menuItem23
             // 
-            this.menuItem21.Index = 10;
-            this.menuItem21.Shortcut = System.Windows.Forms.Shortcut.CtrlShiftW;
-            this.menuItem21.Text = "ウインドウを閉じる(&L)";
-            this.menuItem21.Click += new System.EventHandler(this.menuItem21_Click);
+            this.menuItem23.Index = 0;
+            this.menuItem23.Text = "&Cut";
             // 
-            // menuItem22
+            // menuItem24
             // 
-            this.menuItem22.Index = 0;
-            this.menuItem22.Text = "右から左に表示(&L)";
-            this.menuItem22.Click += new System.EventHandler(this.menuItem22_Click);
+            this.menuItem24.Index = 1;
+            this.menuItem24.Text = "C&opy";
+            // 
+            // menuItem25
+            // 
+            this.menuItem25.Index = 2;
+            this.menuItem25.Text = "&Paste";
+            // 
+            // menuItem26
+            // 
+            this.menuItem26.Index = 0;
+            this.menuItem26.Text = "&YuuyaPad Home page";
+            this.menuItem26.Click += new System.EventHandler(this.menuItem26_Click);
             // 
             // Form1
             // 
@@ -281,6 +311,10 @@
         private System.Windows.Forms.MenuItem menuItem19;
         private System.Windows.Forms.MenuItem menuItem21;
         private System.Windows.Forms.MenuItem menuItem22;
+        private System.Windows.Forms.MenuItem menuItem23;
+        private System.Windows.Forms.MenuItem menuItem24;
+        private System.Windows.Forms.MenuItem menuItem25;
+        private System.Windows.Forms.MenuItem menuItem26;
     }
 }
 

@@ -17,18 +17,18 @@ namespace YuuyaPad
             Application.SetCompatibleTextRenderingDefault(false);
 
             Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
-            Application.ThreadException += (s, e) => ShowException(e.Exception, "UIスレッドで未処理の例外"); // Unhandled exception on the UI thread
+            Application.ThreadException += (s, e) => ShowException(e.Exception, "Unhandled exception on the UI thread"); // Unhandled exception on the UI thread
             AppDomain.CurrentDomain.UnhandledException += (s, e) =>
             {
                 if (e.ExceptionObject is Exception ex)
-                    ShowException(ex, "バックグラウンドスレッドで未処理の例外"); // Unhandled exception in background thread
+                    ShowException(ex, "Unhandled exception in background thread"); // Unhandled exception in background thread
                 else
-                    ShowException(new Exception(e.ExceptionObject.ToString()), "非例外オブジェクトのスロー"); // Throwing a non-exception object
+                    ShowException(new Exception(e.ExceptionObject.ToString()), "Throwing a non-exception object"); // Throwing a non-exception object
             };
             TaskScheduler.UnobservedTaskException += (s, e) =>
             {
                 e.SetObserved();
-                ShowException(e.Exception, "非同期タスクで未処理の例外"); //Unhandled exception in asynchronous task
+                ShowException(e.Exception, "Unhandled exception in asynchronous task"); //Unhandled exception in asynchronous task
             };
 
             AppContext = new MyAppContext(); // Keep in static
@@ -48,7 +48,7 @@ namespace YuuyaPad
             catch
             {
                 // If the exception dialog cannot be displayed, it will be displayed as a MessageBox instead
-                MessageBox.Show($"{context}\n\n{ex}", "致命的なエラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"{context}\n\n{ex}", "Yuuya Pad - Fatal Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
