@@ -1,7 +1,7 @@
 # YuuyaPad
 [![Static Badge](https://img.shields.io/badge/latest-Unreleased-A6A6A6)](https://github.com/YuuyaPad/YuuyaPad/releases) [![Static Badge](https://img.shields.io/badge/license-MIT-37CD51)](https://github.com/YuuyaPad/YuuyaPad/blob/main/LICENSE)
 
-YuuyaPad is a fully open source notepad written in C# that is as feature-rich as possible (though not as powerful as Notepad++).
+YuuyaPad is a completely free, open-source notepad written in C# that aims to be as feature-rich as possible (although it is inferior to Notepad++).
 
 # Future goals
 YuuyaPad aims to add all of the following features.<br>
@@ -26,6 +26,16 @@ The following features will not be implemented due to development time:
 1. Open Visual Studio
 1. Make any necessary changes
 1. Select "Build"
+
+# Supported OS
+This program is written in .NET Framework 4.7.2, so it can be used on any OS that supports it.
+## Minimum
+* Windows 7 Service Pack 1 or later
+* Windows Server 2008 R2 Service Pack 1 or later
+
+## Recommended
+* Windows 10 Version 1809 or later
+* Windows Server 2022 or later
 
 # License
 This program is released under the MIT License.<br>
