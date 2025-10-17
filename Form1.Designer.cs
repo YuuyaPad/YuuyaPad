@@ -59,6 +59,8 @@
             this.menuItem7 = new System.Windows.Forms.MenuItem();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.statusBar1 = new System.Windows.Forms.StatusBar();
+            this.menuItem27 = new System.Windows.Forms.MenuItem();
+            this.menuItem28 = new System.Windows.Forms.MenuItem();
             this.SuspendLayout();
             // 
             // mainMenu1
@@ -68,6 +70,7 @@
             this.menuItem2,
             this.menuItem3,
             this.menuItem16,
+            this.menuItem27,
             this.menuItem4});
             // 
             // menuItem1
@@ -217,7 +220,7 @@
             // 
             // menuItem4
             // 
-            this.menuItem4.Index = 4;
+            this.menuItem4.Index = 5;
             this.menuItem4.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.menuItem26,
             this.menuItem5,
@@ -269,6 +272,19 @@
             this.statusBar1.TabIndex = 2;
             this.statusBar1.Text = "text";
             // 
+            // menuItem27
+            // 
+            this.menuItem27.Index = 4;
+            this.menuItem27.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.menuItem28});
+            this.menuItem27.Text = "&Debug";
+            // 
+            // menuItem28
+            // 
+            this.menuItem28.Index = 0;
+            this.menuItem28.Text = "&Trigger an exception";
+            this.menuItem28.Click += new System.EventHandler(this.menuItem28_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -315,6 +331,8 @@
         private System.Windows.Forms.MenuItem menuItem24;
         private System.Windows.Forms.MenuItem menuItem25;
         private System.Windows.Forms.MenuItem menuItem26;
+        private System.Windows.Forms.MenuItem menuItem27;
+        private System.Windows.Forms.MenuItem menuItem28;
     }
 }
 

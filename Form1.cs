@@ -10,6 +10,7 @@ namespace YuuyaPad
         {
             InitializeComponent();
             ShowTextLength();
+            DebugMenu();
         }
 
         private void ShowTextLength()
@@ -134,6 +135,22 @@ namespace YuuyaPad
         {
             // View YuuyaPad Home page
             Process.Start("https://yuuyapad.github.io/");
+        }
+
+        private void DebugMenu() // DEBUG ONLY 
+        {
+            menuItem27.Visible = false;
+
+            // This contains code that is for debugging purposes only.
+#if DEBUG
+            menuItem27.Visible = true;
+#endif
+        }
+
+        private void menuItem28_Click(object sender, EventArgs e) // DEBUG ONLY
+        {
+            // Used to test exception dialogs
+            throw new Exception("This is for testing exception handling.");
         }
     }
 }
