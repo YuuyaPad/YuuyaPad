@@ -15,7 +15,7 @@ namespace YuuyaPad
         private void LoadVersionInfo()
         {
             // Get app version from assembly information
-            var version = Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "不明";
+            var version = Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "Unknown";
             label2.Text = $"Version: {version}";
 
             // Copyright information (AssemblyInfo.cs or your own definition)

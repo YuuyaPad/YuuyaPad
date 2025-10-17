@@ -45,20 +45,20 @@
             this.menuItem21 = new System.Windows.Forms.MenuItem();
             this.menuItem15 = new System.Windows.Forms.MenuItem();
             this.menuItem2 = new System.Windows.Forms.MenuItem();
+            this.menuItem23 = new System.Windows.Forms.MenuItem();
+            this.menuItem24 = new System.Windows.Forms.MenuItem();
+            this.menuItem25 = new System.Windows.Forms.MenuItem();
             this.menuItem3 = new System.Windows.Forms.MenuItem();
             this.menuItem22 = new System.Windows.Forms.MenuItem();
             this.menuItem16 = new System.Windows.Forms.MenuItem();
             this.menuItem17 = new System.Windows.Forms.MenuItem();
             this.menuItem4 = new System.Windows.Forms.MenuItem();
+            this.menuItem26 = new System.Windows.Forms.MenuItem();
             this.menuItem5 = new System.Windows.Forms.MenuItem();
             this.menuItem6 = new System.Windows.Forms.MenuItem();
             this.menuItem7 = new System.Windows.Forms.MenuItem();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.statusBar1 = new System.Windows.Forms.StatusBar();
-            this.menuItem23 = new System.Windows.Forms.MenuItem();
-            this.menuItem24 = new System.Windows.Forms.MenuItem();
-            this.menuItem25 = new System.Windows.Forms.MenuItem();
-            this.menuItem26 = new System.Windows.Forms.MenuItem();
             this.SuspendLayout();
             // 
             // mainMenu1
@@ -174,6 +174,21 @@
             this.menuItem25});
             this.menuItem2.Text = "&Edit";
             // 
+            // menuItem23
+            // 
+            this.menuItem23.Index = 0;
+            this.menuItem23.Text = "&Cut";
+            // 
+            // menuItem24
+            // 
+            this.menuItem24.Index = 1;
+            this.menuItem24.Text = "C&opy";
+            // 
+            // menuItem25
+            // 
+            this.menuItem25.Index = 2;
+            this.menuItem25.Text = "&Paste";
+            // 
             // menuItem3
             // 
             this.menuItem3.Index = 2;
@@ -209,6 +224,12 @@
             this.menuItem6,
             this.menuItem7});
             this.menuItem4.Text = "&Help";
+            // 
+            // menuItem26
+            // 
+            this.menuItem26.Index = 0;
+            this.menuItem26.Text = "&YuuyaPad Home page";
+            this.menuItem26.Click += new System.EventHandler(this.menuItem26_Click);
             // 
             // menuItem5
             // 
@@ -247,27 +268,6 @@
             this.statusBar1.Size = new System.Drawing.Size(670, 22);
             this.statusBar1.TabIndex = 2;
             this.statusBar1.Text = "text";
-            // 
-            // menuItem23
-            // 
-            this.menuItem23.Index = 0;
-            this.menuItem23.Text = "&Cut";
-            // 
-            // menuItem24
-            // 
-            this.menuItem24.Index = 1;
-            this.menuItem24.Text = "C&opy";
-            // 
-            // menuItem25
-            // 
-            this.menuItem25.Index = 2;
-            this.menuItem25.Text = "&Paste";
-            // 
-            // menuItem26
-            // 
-            this.menuItem26.Index = 0;
-            this.menuItem26.Text = "&YuuyaPad Home page";
-            this.menuItem26.Click += new System.EventHandler(this.menuItem26_Click);
             // 
             // Form1
             // 
