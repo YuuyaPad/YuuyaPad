@@ -13,7 +13,7 @@ namespace YuuyaPad
         [STAThread]
         static void Main()
         {
-            // Checking OS
+            // Check Operating System
             Version current = Environment.OSVersion.Version;
             Version min = new Version(6, 1, 6790); // Windows 7 or later
             if (current < min)
@@ -23,7 +23,7 @@ namespace YuuyaPad
                     $"The current version is {current}, but YuuyaPad requires Windows 7 or later." + Environment.NewLine + "Consider upgrading your version of Windows." + Environment.NewLine + "Click OK to exit the program.",
                     "YuuyaPad",
                     MessageBoxButtons.OK,
-                    MessageBoxIcon.Error
+                    MessageBoxIcon.None
                 );
                 return; // Abort Startup
             }
@@ -70,9 +70,10 @@ namespace YuuyaPad
             }
             catch
             {
+                // If it is not possible to display the exception dialog, show it as a message box instead
                 MessageBox.Show(
                     $"{context}\n\n{ex}",
-                    "YuuyaPad - Fatal Error",
+                    "Fatal Error",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error
                 );

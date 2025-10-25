@@ -29,11 +29,13 @@ namespace YuuyaPad
             var os = Environment.OSVersion;
             label4.Text = $"OS: {os.VersionString}";
 
+            // License information
             label5.Text = "This application is licensed under the MIT license.";
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+            // Close
             this.Close();
         }
     }

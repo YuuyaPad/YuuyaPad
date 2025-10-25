@@ -52,6 +52,8 @@
             this.menuItem22 = new System.Windows.Forms.MenuItem();
             this.menuItem16 = new System.Windows.Forms.MenuItem();
             this.menuItem17 = new System.Windows.Forms.MenuItem();
+            this.menuItem27 = new System.Windows.Forms.MenuItem();
+            this.menuItem28 = new System.Windows.Forms.MenuItem();
             this.menuItem4 = new System.Windows.Forms.MenuItem();
             this.menuItem26 = new System.Windows.Forms.MenuItem();
             this.menuItem5 = new System.Windows.Forms.MenuItem();
@@ -59,8 +61,6 @@
             this.menuItem7 = new System.Windows.Forms.MenuItem();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.statusBar1 = new System.Windows.Forms.StatusBar();
-            this.menuItem27 = new System.Windows.Forms.MenuItem();
-            this.menuItem28 = new System.Windows.Forms.MenuItem();
             this.SuspendLayout();
             // 
             // mainMenu1
@@ -218,6 +218,19 @@
             this.menuItem17.Text = "&Settings...";
             this.menuItem17.Click += new System.EventHandler(this.menuItem17_Click);
             // 
+            // menuItem27
+            // 
+            this.menuItem27.Index = 4;
+            this.menuItem27.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.menuItem28});
+            this.menuItem27.Text = "&Debug";
+            // 
+            // menuItem28
+            // 
+            this.menuItem28.Index = 0;
+            this.menuItem28.Text = "&Trigger an exception";
+            this.menuItem28.Click += new System.EventHandler(this.menuItem28_Click);
+            // 
             // menuItem4
             // 
             this.menuItem4.Index = 5;
@@ -272,19 +285,6 @@
             this.statusBar1.TabIndex = 2;
             this.statusBar1.Text = "text";
             // 
-            // menuItem27
-            // 
-            this.menuItem27.Index = 4;
-            this.menuItem27.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-            this.menuItem28});
-            this.menuItem27.Text = "&Debug";
-            // 
-            // menuItem28
-            // 
-            this.menuItem28.Index = 0;
-            this.menuItem28.Text = "&Trigger an exception";
-            this.menuItem28.Click += new System.EventHandler(this.menuItem28_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -296,6 +296,7 @@
             this.Menu = this.mainMenu1;
             this.Name = "Form1";
             this.Text = "YuuyaPad";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
 
         }

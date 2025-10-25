@@ -61,36 +61,36 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(18, 40);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(42, 12);
+            this.label2.Size = new System.Drawing.Size(50, 12);
             this.label2.TabIndex = 2;
-            this.label2.Text = "version";
+            this.label2.Text = "(version)";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(18, 70);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(52, 12);
+            this.label3.Size = new System.Drawing.Size(60, 12);
             this.label3.TabIndex = 3;
-            this.label3.Text = "copyright";
+            this.label3.Text = "(copyright)";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(12, 140);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(17, 12);
+            this.label4.Size = new System.Drawing.Size(25, 12);
             this.label4.TabIndex = 4;
-            this.label4.Text = "os";
+            this.label4.Text = "(os)";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(18, 85);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(41, 12);
+            this.label5.Size = new System.Drawing.Size(49, 12);
             this.label5.TabIndex = 5;
-            this.label5.Text = "license";
+            this.label5.Text = "(license)";
             // 
             // About
             // 

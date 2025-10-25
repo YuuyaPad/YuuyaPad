@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace YuuyaPad
@@ -13,6 +14,34 @@ namespace YuuyaPad
             DebugMenu();
         }
 
+        private Font currentFont;
+
+        public void ApplyFontToRichTextBox(RichTextBox rtb, Font newFont)
+        {
+            if (rtb == null || newFont == null) return;
+
+            // Change all existing text (fast version without preserving styles)
+            rtb.SelectAll();
+            rtb.SelectionFont = newFont;
+
+            // Reflect new inputs
+            rtb.Font = newFont;
+
+            // Deselection
+            rtb.Select(rtb.TextLength, 0);
+
+            richTextBox1.Font = newFont;
+        }
+
+        private void KeepFont()
+        {
+            // If different from the current font, revert to the current font
+            if (richTextBox1.Font != currentFont)
+            {
+                ApplyFontToRichTextBox(richTextBox1, currentFont);
+            }
+        }
+
         private void ShowTextLength()
         {
             // Get the number of characters
@@ -24,6 +53,9 @@ namespace YuuyaPad
         {
             // Reflects the number of characters in realtime
             ShowTextLength();
+
+            // Keep the font specified in the settings
+            KeepFont();
         }
 
         private void menuItem7_Click(object sender, EventArgs e)
@@ -33,12 +65,6 @@ namespace YuuyaPad
             {
                 f.ShowDialog(this);
             }
-        }
-
-        private void menuItem5_Click(object sender, EventArgs e)
-        {
-            // View YuuyaPad GitHub page
-            Process.Start("https://github.com/YuuyaPad/YuuyaPad");
         }
 
         private void menuItem13_Click(object sender, EventArgs e)
@@ -89,7 +115,21 @@ namespace YuuyaPad
         private void menuItem17_Click(object sender, EventArgs e)
         {
             // Settings
-            Placeholder();
+            Settings f = new Settings();
+
+            // Pass the current font
+            f.CurrentFont = richTextBox1.Font;
+
+            if (f.ShowDialog(this) == DialogResult.OK)
+            {
+                // The font is reflected only when OK is pressed
+                if (f.SelectedFont != null)
+                {
+                    ApplyFont(f.SelectedFont); // <- Applied uniformly here
+                }
+            }
+
+            f.Dispose();
         }
 
         private void menuItem18_Click(object sender, EventArgs e)
@@ -102,15 +142,6 @@ namespace YuuyaPad
         {
             // Print Preview
             Placeholder();
-        }
-
-        private void Placeholder()
-        {
-            // Displayed when trying to access a feature under construction
-            MessageBox.Show("This feature is still under construction",
-                "YuuyaPad",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.None);
         }
 
         private void menuItem21_Click(object sender, EventArgs e)
@@ -137,11 +168,64 @@ namespace YuuyaPad
             Process.Start("https://yuuyapad.github.io/");
         }
 
+        private void menuItem5_Click(object sender, EventArgs e)
+        {
+            // View YuuyaPad GitHub page
+            Process.Start("https://github.com/YuuyaPad/YuuyaPad");
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            currentFont = richTextBox1.Font;
+
+            richTextBox1.TextChanged += (s, ev) =>
+            {
+                // Prevent fonts from resetting after a full delete
+                if (richTextBox1.TextLength == 0 && richTextBox1.Font != currentFont)
+                {
+                    richTextBox1.Font = currentFont;
+                }
+            };
+        }
+
+        public void ApplyFont(Font newFont)
+        {
+            if (newFont == null) return;
+
+            currentFont = newFont; // Remember current font
+
+            // Also updated the default font for new inputs
+            richTextBox1.Font = newFont;
+
+            // Reflects to existing text (select all and set)
+            richTextBox1.SelectAll();
+            richTextBox1.SelectionFont = newFont;
+
+            // Deselect
+            richTextBox1.Select(richTextBox1.TextLength, 0);
+        }
+
+        private void Placeholder()
+        {
+            // Displayed when trying to access a feature under construction
+            MessageBox.Show("This feature is still under construction",
+                "YuuyaPad",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.None);
+        }
+
+        /// <summary>
+        /// DEBUG FEATURES
+        /// </summary>
+        /// This contains code that is for debugging purposes only.
+        /// This code will only run in the "Debug" configuration, not in the "Release" configuration.
+        /// It is used for development purposes and is not recommended for any other purposes.
+
         private void DebugMenu() // DEBUG ONLY 
         {
+            // Show menu in Debug, hide in Release
             menuItem27.Visible = false;
 
-            // This contains code that is for debugging purposes only.
 #if DEBUG
             menuItem27.Visible = true;
 #endif
