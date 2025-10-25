@@ -46,15 +46,33 @@ namespace YuuyaPad
 
                 if (fd.ShowDialog() == DialogResult.OK)
                 {
+                    // Reflect this appropriately in richTextBox1
                     SelectedFont = fd.Font;
+
+                    // Label4: Reflects only the font name and style (size is fixed at 9pt)
+                    float fixedLabelSize = 9f;
+                    label4.Font = new Font(fd.Font.FontFamily, fixedLabelSize, fd.Font.Style);
+
+                    // Display content
                     label4.Text = $"{fd.Font.Name}, {fd.Font.SizeInPoints}pt";
-                    label4.Font = fd.Font;
+
+                    // Auto size (prevent cut-off)
+                    label4.AutoSize = true;
+
+                    // Placed to the right of label3
+                    label4.Location = new Point(
+                        label3.Right + 40,  // 40px margin to the left
+                        label3.Top
+                    );
                 }
             }
         }
 
         private void Settings_Load(object sender, EventArgs e)
         {
+            // Do not show even if you select No
+            this.Hide();
+
             // Settings implementation is in early stages
             DialogResult result = MessageBox.Show("Settings is still under construction and may not function properly.\r\nDo you still want to continue?",
                 "Settings",
@@ -64,6 +82,7 @@ namespace YuuyaPad
             if (result == DialogResult.Yes)
             {
                 // Continue Settings
+                this.Show();
                 ContinueSettings();
             }
             else if (result == DialogResult.No)
@@ -75,22 +94,12 @@ namespace YuuyaPad
 
         private void InitSettings()
         {
-            // Settings Initialization
-            label4.AutoSize = true;
-            label4.TextAlign = ContentAlignment.MiddleRight;
-            label4.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            // The code to initialize the font and size display will be inserted later
         }
 
         private void ContinueSettings()
         {
             InitSettings();
-
-            if (CurrentFont != null)
-            {
-                label4.Text = $"{CurrentFont.Name}, {CurrentFont.SizeInPoints}pt";
-                label4.Font = CurrentFont;
-                SelectedFont = CurrentFont;
-            }
         }
 
     }
