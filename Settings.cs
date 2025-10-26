@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Drawing.Text;
 using System.Windows.Forms;
 
 namespace YuuyaPad
@@ -42,28 +41,17 @@ namespace YuuyaPad
             // Change Font
             using (FontDialog fd = new FontDialog())
             {
-                fd.Font = SelectedFont ?? CurrentFont ?? this.Font;
+                // Based on the current or selected font
+                fd.Font = SelectedFont ?? CurrentFont ?? SystemFonts.DefaultFont;
 
                 if (fd.ShowDialog() == DialogResult.OK)
                 {
-                    // Reflect this appropriately in richTextBox1
+                    // To apply to richTextBox1
                     SelectedFont = fd.Font;
 
-                    // Label4: Reflects only the font name and style (size is fixed at 9pt)
-                    float fixedLabelSize = 9f;
-                    label4.Font = new Font(fd.Font.FontFamily, fixedLabelSize, fd.Font.Style);
-
-                    // Display content
+                    // Label4's appearance remains the same size, only the font is changed
+                    label4.Font = new Font(fd.Font.FontFamily, 9f, fd.Font.Style);
                     label4.Text = $"{fd.Font.Name}, {fd.Font.SizeInPoints}pt";
-
-                    // Auto size (prevent cut-off)
-                    label4.AutoSize = true;
-
-                    // Placed to the right of label3
-                    label4.Location = new Point(
-                        label3.Right + 40,  // 40px margin to the left
-                        label3.Top
-                    );
                 }
             }
         }
@@ -92,13 +80,23 @@ namespace YuuyaPad
             }
         }
 
-        private void InitSettings()
+        public void InitSettings()
         {
-            // The code to initialize the font and size display will be inserted later
+            Font baseFont = SelectedFont ?? CurrentFont ?? SystemFonts.DefaultFont;
+
+            label4.Font = new Font(baseFont.FontFamily, 9f, baseFont.Style);
+            label4.Text = $"{baseFont.Name}, {baseFont.SizeInPoints}pt";
+            label4.AutoSize = true;
+
+            if (label3 != null)
+            {
+                label4.Location = new Point(label3.Right + 40, label3.Top);
+            }
         }
 
         private void ContinueSettings()
         {
+            // Yes
             InitSettings();
         }
 

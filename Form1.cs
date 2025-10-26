@@ -33,15 +33,6 @@ namespace YuuyaPad
             richTextBox1.Font = newFont;
         }
 
-        private void KeepFont()
-        {
-            // If different from the current font, revert to the current font
-            if (richTextBox1.Font != currentFont)
-            {
-                ApplyFontToRichTextBox(richTextBox1, currentFont);
-            }
-        }
-
         private void ShowTextLength()
         {
             // Get the number of characters
@@ -53,9 +44,6 @@ namespace YuuyaPad
         {
             // Reflects the number of characters in realtime
             ShowTextLength();
-
-            // Keep the font specified in the settings
-            KeepFont();
         }
 
         private void menuItem7_Click(object sender, EventArgs e)
@@ -114,18 +102,26 @@ namespace YuuyaPad
 
         private void menuItem17_Click(object sender, EventArgs e)
         {
-            // Settings
+            // Open Settings
             Settings f = new Settings();
 
-            // Pass the current font
             f.CurrentFont = richTextBox1.Font;
+            f.InitSettings();
 
             if (f.ShowDialog(this) == DialogResult.OK)
             {
-                // The font is reflected only when OK is pressed
                 if (f.SelectedFont != null)
                 {
-                    ApplyFont(f.SelectedFont); // <- Applied uniformly here
+                    // Change the entire font
+                    richTextBox1.Font = f.SelectedFont;
+
+                    // Apply the new font to the current content too
+                    richTextBox1.SelectAll();
+                    richTextBox1.SelectionFont = f.SelectedFont;
+                    richTextBox1.DeselectAll();
+
+                    // Default input is also in the same font
+                    richTextBox1.SelectionFont = f.SelectedFont;
                 }
             }
 
@@ -186,23 +182,6 @@ namespace YuuyaPad
                     richTextBox1.Font = currentFont;
                 }
             };
-        }
-
-        public void ApplyFont(Font newFont)
-        {
-            if (newFont == null) return;
-
-            currentFont = newFont; // Remember current font
-
-            // Also updated the default font for new inputs
-            richTextBox1.Font = newFont;
-
-            // Reflects to existing text (select all and set)
-            richTextBox1.SelectAll();
-            richTextBox1.SelectionFont = newFont;
-
-            // Deselect
-            richTextBox1.Select(richTextBox1.TextLength, 0);
         }
 
         private void Placeholder()
