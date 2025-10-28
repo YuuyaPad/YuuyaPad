@@ -44,6 +44,9 @@ namespace YuuyaPad
         {
             // Reflects the number of characters in realtime
             ShowTextLength();
+
+            // 
+            UpdateMenuState();
         }
 
         private void menuItem7_Click(object sender, EventArgs e)
@@ -172,6 +175,12 @@ namespace YuuyaPad
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            // Initializing the Edit menu
+            UpdateMenuState();
+
+            // Get search engine settings
+            GetSearchEngine();
+
             currentFont = richTextBox1.Font;
 
             richTextBox1.TextChanged += (s, ev) =>
@@ -191,6 +200,125 @@ namespace YuuyaPad
                 "YuuyaPad",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.None);
+        }
+
+        private void menuItem33_Click(object sender, EventArgs e)
+        {
+            // Search
+            // In the future we plan to allow customization of the search engine.
+
+            string searchText = richTextBox1.SelectedText;
+
+            if (string.IsNullOrWhiteSpace(searchText))
+            {
+                // If nothing is selected, nothing happens to prevent unexpected behavior.
+                return;
+            }
+
+            // Open Google Search
+            Process.Start($"https://www.google.com/search?q={Uri.EscapeDataString(searchText)}");
+
+        }
+
+        private void menuItem35_Click(object sender, EventArgs e)
+        {
+            string dateTimeText;
+
+            try
+            {
+                // Get Device Format Settings
+                dateTimeText = DateTime.Now.ToString(System.Globalization.CultureInfo.CurrentCulture);
+            }
+            catch
+            {
+                // Use ISO 8601 format as a fallback
+                dateTimeText = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss");
+            }
+
+            // Insert at cursor position
+            richTextBox1.SelectedText = dateTimeText;
+        }
+
+        private void menuItem38_Click(object sender, EventArgs e)
+        {
+            // Select All
+            richTextBox1.SelectAll();
+        }
+
+        private void menuItem39_Click(object sender, EventArgs e)
+        {
+            // Deselect All
+            richTextBox1.SelectionLength = 0;
+            richTextBox1.SelectionStart = richTextBox1.TextLength;
+        }
+
+        private void menuItem23_Click(object sender, EventArgs e)
+        {
+            // Cut
+            if (richTextBox1.SelectedText.Length > 0)
+            {
+                richTextBox1.Cut();
+            }
+
+        }
+
+        private void menuItem24_Click(object sender, EventArgs e)
+        {
+            // Copy
+            if (richTextBox1.SelectedText.Length > 0)
+            {
+                richTextBox1.Copy();
+            }
+
+        }
+
+        private void menuItem25_Click(object sender, EventArgs e)
+        {
+            // Paste
+            if (Clipboard.ContainsText())
+            {
+                richTextBox1.Paste();
+            }
+
+        }
+
+        private void menuItem30_Click(object sender, EventArgs e)
+        {
+            // Undo
+            richTextBox1.Undo();
+        }
+
+        private void menuItem31_Click(object sender, EventArgs e)
+        {
+            //Redo
+            richTextBox1.Redo();
+        }
+
+        private void UpdateMenuState()
+        {
+            // Update the enabled/disabled state of Edit menu items
+
+            // Undo/Redo
+            menuItem30.Enabled = richTextBox1.CanUndo;
+            menuItem31.Enabled = richTextBox1.CanRedo;
+
+            // Cut/Copy/Paste
+            bool hasSelection = !string.IsNullOrEmpty(richTextBox1.SelectedText);
+            menuItem23.Enabled = hasSelection;
+            menuItem24.Enabled = hasSelection;
+            menuItem25.Enabled = Clipboard.ContainsText();
+        }
+
+        private void richTextBox1_SelectionChanged(object sender, EventArgs e)
+        {
+            UpdateMenuState();
+        }
+
+        private void GetSearchEngine()
+        {
+            // Get the name of the search engine
+            string SearchEngineName = "Google";
+            menuItem33.Text = $"&Search for {SearchEngineName}";
         }
 
         /// <summary>

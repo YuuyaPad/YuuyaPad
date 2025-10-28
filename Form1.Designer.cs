@@ -61,6 +61,17 @@
             this.menuItem7 = new System.Windows.Forms.MenuItem();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.statusBar1 = new System.Windows.Forms.StatusBar();
+            this.menuItem29 = new System.Windows.Forms.MenuItem();
+            this.menuItem30 = new System.Windows.Forms.MenuItem();
+            this.menuItem31 = new System.Windows.Forms.MenuItem();
+            this.menuItem32 = new System.Windows.Forms.MenuItem();
+            this.menuItem33 = new System.Windows.Forms.MenuItem();
+            this.menuItem34 = new System.Windows.Forms.MenuItem();
+            this.menuItem35 = new System.Windows.Forms.MenuItem();
+            this.menuItem36 = new System.Windows.Forms.MenuItem();
+            this.menuItem37 = new System.Windows.Forms.MenuItem();
+            this.menuItem38 = new System.Windows.Forms.MenuItem();
+            this.menuItem39 = new System.Windows.Forms.MenuItem();
             this.SuspendLayout();
             // 
             // mainMenu1
@@ -172,25 +183,40 @@
             // 
             this.menuItem2.Index = 1;
             this.menuItem2.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.menuItem30,
+            this.menuItem31,
+            this.menuItem32,
             this.menuItem23,
             this.menuItem24,
-            this.menuItem25});
+            this.menuItem25,
+            this.menuItem29,
+            this.menuItem33,
+            this.menuItem34,
+            this.menuItem35,
+            this.menuItem36,
+            this.menuItem37});
             this.menuItem2.Text = "&Edit";
             // 
             // menuItem23
             // 
-            this.menuItem23.Index = 0;
+            this.menuItem23.Index = 3;
+            this.menuItem23.Shortcut = System.Windows.Forms.Shortcut.CtrlX;
             this.menuItem23.Text = "&Cut";
+            this.menuItem23.Click += new System.EventHandler(this.menuItem23_Click);
             // 
             // menuItem24
             // 
-            this.menuItem24.Index = 1;
+            this.menuItem24.Index = 4;
+            this.menuItem24.Shortcut = System.Windows.Forms.Shortcut.CtrlC;
             this.menuItem24.Text = "C&opy";
+            this.menuItem24.Click += new System.EventHandler(this.menuItem24_Click);
             // 
             // menuItem25
             // 
-            this.menuItem25.Index = 2;
+            this.menuItem25.Index = 5;
+            this.menuItem25.Shortcut = System.Windows.Forms.Shortcut.CtrlV;
             this.menuItem25.Text = "&Paste";
+            this.menuItem25.Click += new System.EventHandler(this.menuItem25_Click);
             // 
             // menuItem3
             // 
@@ -275,6 +301,7 @@
             this.richTextBox1.Size = new System.Drawing.Size(670, 314);
             this.richTextBox1.TabIndex = 1;
             this.richTextBox1.Text = "";
+            this.richTextBox1.SelectionChanged += new System.EventHandler(this.richTextBox1_SelectionChanged);
             this.richTextBox1.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
             // 
             // statusBar1
@@ -284,6 +311,76 @@
             this.statusBar1.Size = new System.Drawing.Size(670, 22);
             this.statusBar1.TabIndex = 2;
             this.statusBar1.Text = "text";
+            // 
+            // menuItem29
+            // 
+            this.menuItem29.Index = 6;
+            this.menuItem29.Text = "-";
+            // 
+            // menuItem30
+            // 
+            this.menuItem30.Index = 0;
+            this.menuItem30.Shortcut = System.Windows.Forms.Shortcut.CtrlZ;
+            this.menuItem30.Text = "&Undo";
+            this.menuItem30.Click += new System.EventHandler(this.menuItem30_Click);
+            // 
+            // menuItem31
+            // 
+            this.menuItem31.Index = 1;
+            this.menuItem31.Shortcut = System.Windows.Forms.Shortcut.CtrlY;
+            this.menuItem31.Text = "&Redo";
+            this.menuItem31.Click += new System.EventHandler(this.menuItem31_Click);
+            // 
+            // menuItem32
+            // 
+            this.menuItem32.Index = 2;
+            this.menuItem32.Text = "-";
+            // 
+            // menuItem33
+            // 
+            this.menuItem33.Index = 7;
+            this.menuItem33.Shortcut = System.Windows.Forms.Shortcut.CtrlE;
+            this.menuItem33.Text = "&Google Search";
+            this.menuItem33.Click += new System.EventHandler(this.menuItem33_Click);
+            // 
+            // menuItem34
+            // 
+            this.menuItem34.Index = 8;
+            this.menuItem34.Text = "-";
+            // 
+            // menuItem35
+            // 
+            this.menuItem35.Index = 9;
+            this.menuItem35.Shortcut = System.Windows.Forms.Shortcut.F5;
+            this.menuItem35.Text = "&Insert Date and Time";
+            this.menuItem35.Click += new System.EventHandler(this.menuItem35_Click);
+            // 
+            // menuItem36
+            // 
+            this.menuItem36.Index = 10;
+            this.menuItem36.Text = "-";
+            // 
+            // menuItem37
+            // 
+            this.menuItem37.Index = 11;
+            this.menuItem37.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.menuItem38,
+            this.menuItem39});
+            this.menuItem37.Text = "Se&lect";
+            // 
+            // menuItem38
+            // 
+            this.menuItem38.Index = 0;
+            this.menuItem38.Shortcut = System.Windows.Forms.Shortcut.CtrlA;
+            this.menuItem38.Text = "Select &All";
+            this.menuItem38.Click += new System.EventHandler(this.menuItem38_Click);
+            // 
+            // menuItem39
+            // 
+            this.menuItem39.Index = 1;
+            this.menuItem39.Shortcut = System.Windows.Forms.Shortcut.CtrlD;
+            this.menuItem39.Text = "&Deselect";
+            this.menuItem39.Click += new System.EventHandler(this.menuItem39_Click);
             // 
             // Form1
             // 
@@ -334,6 +431,17 @@
         private System.Windows.Forms.MenuItem menuItem26;
         private System.Windows.Forms.MenuItem menuItem27;
         private System.Windows.Forms.MenuItem menuItem28;
+        private System.Windows.Forms.MenuItem menuItem30;
+        private System.Windows.Forms.MenuItem menuItem31;
+        private System.Windows.Forms.MenuItem menuItem32;
+        private System.Windows.Forms.MenuItem menuItem29;
+        private System.Windows.Forms.MenuItem menuItem33;
+        private System.Windows.Forms.MenuItem menuItem34;
+        private System.Windows.Forms.MenuItem menuItem35;
+        private System.Windows.Forms.MenuItem menuItem36;
+        private System.Windows.Forms.MenuItem menuItem37;
+        private System.Windows.Forms.MenuItem menuItem38;
+        private System.Windows.Forms.MenuItem menuItem39;
     }
 }
 

@@ -76,6 +76,7 @@ namespace YuuyaPad
             else if (result == DialogResult.No)
             {
                 // Close Settings
+                this.Hide();
                 this.Close();
             }
         }
