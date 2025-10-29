@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Printing;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace YuuyaPad
@@ -15,6 +17,123 @@ namespace YuuyaPad
         }
 
         private Font currentFont;
+
+        // RichTextBox printing support class
+        public class RichTextBoxPrinter
+        {
+            [StructLayout(LayoutKind.Sequential)]
+            private struct RECT
+            {
+                public int Left, Top, Right, Bottom;
+            }
+
+            [StructLayout(LayoutKind.Sequential)]
+            private struct CHARRANGE
+            {
+                public int cpMin;
+                public int cpMax;
+            }
+
+            [StructLayout(LayoutKind.Sequential)]
+            private struct FORMATRANGE
+            {
+                public IntPtr hdc;
+                public IntPtr hdcTarget;
+                public RECT rc;
+                public RECT rcPage;
+                public CHARRANGE chrg;
+            }
+
+            [DllImport("user32.dll")]
+            private static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam);
+
+            private const int WM_USER = 0x0400;
+            private const int EM_FORMATRANGE = WM_USER + 57;
+
+            public static int Print(RichTextBox rtb, int charFrom, int charTo, PrintPageEventArgs e)
+            {
+                FORMATRANGE fmtRange;
+                RECT rectToPrint;
+                RECT rectPage;
+
+                // Convert 1/100 inch to 1/1440 inch (twips)
+                rectToPrint.Top = (int)(e.MarginBounds.Top * 14.4);
+                rectToPrint.Bottom = (int)(e.MarginBounds.Bottom * 14.4);
+                rectToPrint.Left = (int)(e.MarginBounds.Left * 14.4);
+                rectToPrint.Right = (int)(e.MarginBounds.Right * 14.4);
+
+                rectPage.Top = (int)(e.PageBounds.Top * 14.4);
+                rectPage.Bottom = (int)(e.PageBounds.Bottom * 14.4);
+                rectPage.Left = (int)(e.PageBounds.Left * 14.4);
+                rectPage.Right = (int)(e.PageBounds.Right * 14.4);
+
+                IntPtr hdc = e.Graphics.GetHdc();
+
+                fmtRange.chrg.cpMin = charFrom;
+                fmtRange.chrg.cpMax = charTo;
+                fmtRange.hdc = hdc;
+                fmtRange.hdcTarget = hdc;
+                fmtRange.rc = rectToPrint;
+                fmtRange.rcPage = rectPage;
+
+                IntPtr wParam = new IntPtr(1);
+                IntPtr lParam = Marshal.AllocCoTaskMem(Marshal.SizeOf(fmtRange));
+                Marshal.StructureToPtr(fmtRange, lParam, false);
+
+                IntPtr res = SendMessage(rtb.Handle, EM_FORMATRANGE, wParam, lParam);
+                Marshal.FreeCoTaskMem(lParam);
+                e.Graphics.ReleaseHdc(hdc);
+
+                return res.ToInt32();
+            }
+
+            public static void Clear(RichTextBox rtb)
+            {
+                SendMessage(rtb.Handle, EM_FORMATRANGE, IntPtr.Zero, IntPtr.Zero);
+            }
+        }
+
+        private int checkPrint;
+
+        private void menuItemPrint_Click(object sender, EventArgs e)
+        {
+            PrintDocument pd = new PrintDocument();
+            pd.DocumentName = "YuuyaPad Document";
+            pd.BeginPrint += (s, ev) => { checkPrint = 0; };
+            pd.PrintPage += PrintPage;
+
+            PrintDialog dlg = new PrintDialog();
+            dlg.Document = pd;
+
+            if (dlg.ShowDialog() == DialogResult.OK)
+                pd.Print();
+        }
+
+        private void menuItemPrintPreview_Click(object sender, EventArgs e)
+        {
+            PrintDocument pd = new PrintDocument();
+            pd.DocumentName = "YuuyaPad Document";
+            pd.BeginPrint += (s, ev) => { checkPrint = 0; };
+            pd.PrintPage += PrintPage;
+
+            PrintPreviewDialog preview = new PrintPreviewDialog();
+            preview.Document = pd;
+            preview.Width = 1000;
+            preview.Height = 800;
+            preview.ShowDialog();
+        }
+
+        private void PrintPage(object sender, PrintPageEventArgs e)
+        {
+            checkPrint = RichTextBoxPrinter.Print(richTextBox1, checkPrint, richTextBox1.TextLength, e);
+            if (checkPrint < richTextBox1.TextLength)
+                e.HasMorePages = true;
+            else
+            {
+                e.HasMorePages = false;
+                RichTextBoxPrinter.Clear(richTextBox1);
+            }
+        }
 
         public void ApplyFontToRichTextBox(RichTextBox rtb, Font newFont)
         {
@@ -134,13 +253,13 @@ namespace YuuyaPad
         private void menuItem18_Click(object sender, EventArgs e)
         {
             // Print
-            Placeholder();
+            menuItemPrint_Click(sender, e);
         }
 
         private void menuItem20_Click(object sender, EventArgs e)
         {
             // Print Preview
-            Placeholder();
+            menuItemPrintPreview_Click(sender, e);
         }
 
         private void menuItem21_Click(object sender, EventArgs e)
