@@ -25,7 +25,7 @@ body:
     attributes:
       label: What happened?
       description: Please describe the bug as specifically as possible.
-      placeholder: An exception occurs when trying to save.
+      placeholder: Please be as specific as possible about what kind of bug you are experiencing
     validations:
       required: true
 
