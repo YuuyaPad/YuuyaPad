@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Reflection;
 using System.Windows.Forms;
 
 namespace YuuyaPad
@@ -14,23 +13,25 @@ namespace YuuyaPad
 
         private void LoadVersionInfo()
         {
-            // Get app version from assembly information
-            var version = Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "Unknown";
+            // Configure the About Dialog
+
+            string version = "1.0"; // Version
+            string copyright = "Copyright © 2020-2025 Yuuya"; // Copyright
+            string license = "This application is licensed under the MIT license."; // License
+            var os = Environment.OSVersion; // OS
+
+            label3.Text = copyright; // Display Copyright
+            label4.Text = $"OS: {os.VersionString}"; // Display OS
+            label5.Text = license; // Display License
+
+            // Check if debug
+#if DEBUG
+// Debug
+label2.Text = $"Version: {version} [Debug]";
+#else
+            // Release
             label2.Text = $"Version: {version}";
-
-            // Copyright information (AssemblyInfo.cs or your own definition)
-            var copyright = Assembly
-                .GetExecutingAssembly()
-                .GetCustomAttribute<AssemblyCopyrightAttribute>()
-                ?.Copyright ?? "© 2020-2025 Yuuya";
-            label3.Text = copyright;
-
-            // Get the OS version
-            var os = Environment.OSVersion;
-            label4.Text = $"OS: {os.VersionString}";
-
-            // License information
-            label5.Text = "This application is licensed under the MIT license.";
+#endif
         }
 
         private void button1_Click(object sender, EventArgs e)
