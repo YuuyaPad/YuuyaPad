@@ -16,7 +16,8 @@ Tell them where to go, how often they can expect to get an update on a
 reported vulnerability, what to expect if the vulnerability is accepted or
 declined, etc. -->
 
-If you discover a vulnerability, please send a DM to X (formerly Twitter).
+If you find a vulnerability, please open an issue on GitHub or send us a DM on X (formerly Twitter).<br>
+Watch this repository to get the latest updates on reported vulnerabilities.
 
-If your request is approved, it will be fixed as quickly as possible.<br>
-If your request is not approved, it means that the vulnerability is difficult or impossible to fix for some reason.
+If a vulnerability is accepted, it will be fixed as quickly as possible.<br>
+If a vulnerability is rejected, it means that it is not a vulnerability or cannot be fixed for some reason.
