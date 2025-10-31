@@ -16,6 +16,8 @@ namespace YuuyaPad
             DebugMenu();
         }
 
+        public FindDialog sf = null;
+
         private Font currentFont;
 
         // RichTextBox printing support class
@@ -443,7 +445,8 @@ namespace YuuyaPad
         private void menuItem41_Click(object sender, EventArgs e)
         {
             // Find
-            Placeholder();
+            FindDialog f = new FindDialog();
+            f.Show(this);
         }
 
         private void FindNext(string searchText)
