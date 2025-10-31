@@ -326,6 +326,7 @@ namespace YuuyaPad
             // Search
             // In the future we plan to allow customization of the search engine.
 
+            string SearchURL = "https://www.google.com/search?q="; // Default to Google
             string searchText = richTextBox1.SelectedText;
 
             if (string.IsNullOrWhiteSpace(searchText))
@@ -335,8 +336,7 @@ namespace YuuyaPad
             }
 
             // Open Google Search
-            Process.Start($"https://www.google.com/search?q={Uri.EscapeDataString(searchText)}");
-
+            Process.Start($"{SearchURL}{Uri.EscapeDataString(searchText)}");
         }
 
         private void menuItem35_Click(object sender, EventArgs e)
@@ -438,6 +438,24 @@ namespace YuuyaPad
             // Get the name of the search engine
             string SearchEngineName = "Google";
             menuItem33.Text = $"&Search for {SearchEngineName}";
+        }
+
+        private void menuItem41_Click(object sender, EventArgs e)
+        {
+            // Find
+            Placeholder();
+        }
+
+        private void FindNext(string searchText)
+        {
+            // Write Find Next Process here
+        }
+
+        private void menuItem42_Click(object sender, EventArgs e)
+        {
+            // Find Next
+            Placeholder();
+            // FindNext();
         }
 
         /// <summary>

@@ -51,6 +51,9 @@
             this.menuItem23 = new System.Windows.Forms.MenuItem();
             this.menuItem24 = new System.Windows.Forms.MenuItem();
             this.menuItem25 = new System.Windows.Forms.MenuItem();
+            this.menuItem40 = new System.Windows.Forms.MenuItem();
+            this.menuItem41 = new System.Windows.Forms.MenuItem();
+            this.menuItem42 = new System.Windows.Forms.MenuItem();
             this.menuItem29 = new System.Windows.Forms.MenuItem();
             this.menuItem33 = new System.Windows.Forms.MenuItem();
             this.menuItem34 = new System.Windows.Forms.MenuItem();
@@ -189,6 +192,9 @@
             this.menuItem23,
             this.menuItem24,
             this.menuItem25,
+            this.menuItem40,
+            this.menuItem41,
+            this.menuItem42,
             this.menuItem29,
             this.menuItem33,
             this.menuItem34,
@@ -237,38 +243,57 @@
             this.menuItem25.Text = "&Paste";
             this.menuItem25.Click += new System.EventHandler(this.menuItem25_Click);
             // 
+            // menuItem40
+            // 
+            this.menuItem40.Index = 6;
+            this.menuItem40.Text = "-";
+            // 
+            // menuItem41
+            // 
+            this.menuItem41.Index = 7;
+            this.menuItem41.Shortcut = System.Windows.Forms.Shortcut.CtrlF;
+            this.menuItem41.Text = "&Find";
+            this.menuItem41.Click += new System.EventHandler(this.menuItem41_Click);
+            // 
+            // menuItem42
+            // 
+            this.menuItem42.Index = 8;
+            this.menuItem42.Shortcut = System.Windows.Forms.Shortcut.F3;
+            this.menuItem42.Text = "Find &Next";
+            this.menuItem42.Click += new System.EventHandler(this.menuItem42_Click);
+            // 
             // menuItem29
             // 
-            this.menuItem29.Index = 6;
+            this.menuItem29.Index = 9;
             this.menuItem29.Text = "-";
             // 
             // menuItem33
             // 
-            this.menuItem33.Index = 7;
+            this.menuItem33.Index = 10;
             this.menuItem33.Shortcut = System.Windows.Forms.Shortcut.CtrlE;
             this.menuItem33.Text = "&Google Search";
             this.menuItem33.Click += new System.EventHandler(this.menuItem33_Click);
             // 
             // menuItem34
             // 
-            this.menuItem34.Index = 8;
+            this.menuItem34.Index = 11;
             this.menuItem34.Text = "-";
             // 
             // menuItem35
             // 
-            this.menuItem35.Index = 9;
+            this.menuItem35.Index = 12;
             this.menuItem35.Shortcut = System.Windows.Forms.Shortcut.F5;
             this.menuItem35.Text = "&Insert Date and Time";
             this.menuItem35.Click += new System.EventHandler(this.menuItem35_Click);
             // 
             // menuItem36
             // 
-            this.menuItem36.Index = 10;
+            this.menuItem36.Index = 13;
             this.menuItem36.Text = "-";
             // 
             // menuItem37
             // 
-            this.menuItem37.Index = 11;
+            this.menuItem37.Index = 14;
             this.menuItem37.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.menuItem38,
             this.menuItem39});
@@ -442,6 +467,9 @@
         private System.Windows.Forms.MenuItem menuItem37;
         private System.Windows.Forms.MenuItem menuItem38;
         private System.Windows.Forms.MenuItem menuItem39;
+        private System.Windows.Forms.MenuItem menuItem40;
+        private System.Windows.Forms.MenuItem menuItem41;
+        private System.Windows.Forms.MenuItem menuItem42;
     }
 }
 
