@@ -329,16 +329,16 @@ namespace YuuyaPad
             // In the future we plan to allow customization of the search engine.
 
             string SearchURL = "https://www.google.com/search?q="; // Default to Google
-            string searchText = richTextBox1.SelectedText;
+            string SearchText = richTextBox1.SelectedText;
 
-            if (string.IsNullOrWhiteSpace(searchText))
+            if (string.IsNullOrWhiteSpace(SearchText))
             {
                 // If nothing is selected, nothing happens to prevent unexpected behavior.
                 return;
             }
 
             // Open Google Search
-            Process.Start($"{SearchURL}{Uri.EscapeDataString(searchText)}");
+            Process.Start($"{SearchURL}{Uri.EscapeDataString(SearchText)}");
         }
 
         private void menuItem35_Click(object sender, EventArgs e)
