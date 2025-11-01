@@ -175,9 +175,13 @@ namespace YuuyaPad
         private void menuItem7_Click(object sender, EventArgs e)
         {
             // Show About Dialog
-            using (var f = new About())
+            using (About about = new About())
             {
-                f.ShowDialog(this);
+                // Displayed in the center of the program
+                about.StartPosition = FormStartPosition.CenterParent;
+
+                // Modal Displal
+                about.ShowDialog(this);
             }
         }
 
