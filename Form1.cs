@@ -393,7 +393,6 @@ namespace YuuyaPad
             {
                 richTextBox1.Cut();
             }
-
         }
 
         private void menuItem24_Click(object sender, EventArgs e)
@@ -403,7 +402,6 @@ namespace YuuyaPad
             {
                 richTextBox1.Copy();
             }
-
         }
 
         private void menuItem25_Click(object sender, EventArgs e)
@@ -413,7 +411,6 @@ namespace YuuyaPad
             {
                 richTextBox1.Paste();
             }
-
         }
 
         private void menuItem30_Click(object sender, EventArgs e)
