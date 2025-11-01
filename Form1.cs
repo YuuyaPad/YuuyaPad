@@ -100,7 +100,7 @@ namespace YuuyaPad
         private void menuItemPrint_Click(object sender, EventArgs e)
         {
             PrintDocument pd = new PrintDocument();
-            pd.DocumentName = "YuuyaPad Document";
+            pd.DocumentName = "YuuyaPad";
             pd.BeginPrint += (s, ev) => { checkPrint = 0; };
             pd.PrintPage += PrintPage;
 
@@ -114,14 +114,14 @@ namespace YuuyaPad
         private void menuItemPrintPreview_Click(object sender, EventArgs e)
         {
             PrintDocument pd = new PrintDocument();
-            pd.DocumentName = "YuuyaPad Document";
+            pd.DocumentName = "YuuyaPad";
             pd.BeginPrint += (s, ev) => { checkPrint = 0; };
             pd.PrintPage += PrintPage;
 
             PrintPreviewDialog preview = new PrintPreviewDialog();
             preview.Document = pd;
-            preview.Width = 1000;
-            preview.Height = 800;
+            preview.Width = 500;
+            preview.Height = 400;
             preview.ShowDialog();
         }
 
