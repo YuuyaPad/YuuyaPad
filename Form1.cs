@@ -235,6 +235,9 @@ namespace YuuyaPad
             // Open Settings
             Settings f = new Settings();
 
+            // Displayed in the center of the program
+            f.StartPosition = FormStartPosition.CenterScreen;
+
             f.CurrentFont = richTextBox1.Font;
             f.InitSettings();
 

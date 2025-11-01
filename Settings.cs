@@ -58,27 +58,7 @@ namespace YuuyaPad
 
         private void Settings_Load(object sender, EventArgs e)
         {
-            // Do not show even if you select No
-            this.Hide();
-
-            // Settings implementation is in early stages
-            DialogResult result = MessageBox.Show("Settings is still under construction and may not function properly.\r\nDo you still want to continue?",
-                "Settings",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Exclamation);
-
-            if (result == DialogResult.Yes)
-            {
-                // Continue Settings
-                this.Show();
-                ContinueSettings();
-            }
-            else if (result == DialogResult.No)
-            {
-                // Close Settings
-                this.Hide();
-                this.Close();
-            }
+            
         }
 
         public void InitSettings()
@@ -94,12 +74,5 @@ namespace YuuyaPad
                 label4.Location = new Point(label3.Right + 40, label3.Top);
             }
         }
-
-        private void ContinueSettings()
-        {
-            // Yes
-            InitSettings();
-        }
-
     }
 }
