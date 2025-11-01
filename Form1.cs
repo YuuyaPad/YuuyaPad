@@ -12,13 +12,15 @@ namespace YuuyaPad
         public Form1()
         {
             InitializeComponent();
-            ShowTextLength();
+            UpdateStatusBar();
             DebugMenu();
         }
 
         public FindDialog sf = null;
 
         private Font currentFont;
+
+        private float zoomFactor = 1.0f; // Current zoom factor
 
         // RichTextBox printing support class
         public class RichTextBoxPrinter
@@ -154,20 +156,20 @@ namespace YuuyaPad
             richTextBox1.Font = newFont;
         }
 
-        private void ShowTextLength()
+        private void UpdateStatusBar()
         {
-            // Get the number of characters
+            // Update the status bar state
             int textLength = richTextBox1.TextLength;
             statusBar1.Text = $"Character count: {textLength}";
         }
 
         private void richTextBox1_TextChanged(object sender, EventArgs e)
         {
-            // Reflects the number of characters in realtime
-            ShowTextLength();
-
-            // 
+            // Update Edit menu state
             UpdateMenuState();
+
+            // Update Status Bar
+            UpdateStatusBar();
         }
 
         private void menuItem7_Click(object sender, EventArgs e)
@@ -301,6 +303,17 @@ namespace YuuyaPad
 
             // Get search engine settings
             GetSearchEngine();
+
+            // Show status bar by default
+            menuItem43.Checked = true;
+            statusBar1.Visible = true;
+
+            // Register shortcut keys for zoom
+            this.KeyPreview = true;
+            this.KeyDown += Form1_KeyDown;
+
+            // Set the initial zoom factor
+            richTextBox1.ZoomFactor = zoomFactor;
 
             currentFont = richTextBox1.Font;
 
@@ -459,6 +472,82 @@ namespace YuuyaPad
             // Find Next
             Placeholder();
             // FindNext();
+        }
+
+        private void menuItem43_Click(object sender, EventArgs e)
+        {
+            // Status Bar
+            menuItem43.Checked = !menuItem43.Checked;
+            statusBar1.Visible = menuItem43.Checked;
+        }
+
+        private void menuItem45_Click(object sender, EventArgs e)
+        {
+            ZoomIn();
+        }
+
+        private void menuItem46_Click(object sender, EventArgs e)
+        {
+            ZoomOut();
+        }
+
+        private void menuItem47_Click(object sender, EventArgs e)
+        {
+            ZoomReset();
+        }
+
+        private void ZoomIn()
+        {
+            // Zoomin
+            if (richTextBox1.ZoomFactor < 5.0f) // Max 500%
+                richTextBox1.ZoomFactor += 0.1f;
+        }
+
+        private void ZoomOut()
+        {
+            // Zoom out
+            if (richTextBox1.ZoomFactor > 0.2f) // Min 20%
+                richTextBox1.ZoomFactor -= 0.1f;
+        }
+
+        private void ZoomReset()
+        {
+            // Zoom reset
+            richTextBox1.ZoomFactor = 1.0f;
+        }
+
+        private void ChangeZoom(float delta)
+        {
+            zoomFactor += delta;
+
+            // Range limit (50% to 500%)
+            if (zoomFactor < 0.5f) zoomFactor = 0.5f;
+            if (zoomFactor > 5.0f) zoomFactor = 5.0f;
+
+            richTextBox1.ZoomFactor = zoomFactor;
+        }
+
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            // Ctrl + + to zoom in
+            if (e.Control && e.KeyCode == Keys.Oemplus)
+            {
+                ChangeZoom(0.1f);
+                e.Handled = true;
+            }
+            // Ctrl + - to zoom out
+            else if (e.Control && e.KeyCode == Keys.OemMinus)
+            {
+                ChangeZoom(-0.1f);
+                e.Handled = true;
+            }
+            // Ctrl + 0 to reset
+            else if (e.Control && e.KeyCode == Keys.D0)
+            {
+                zoomFactor = 1.0f;
+                richTextBox1.ZoomFactor = zoomFactor;
+                e.Handled = true;
+            }
         }
 
         /// <summary>
