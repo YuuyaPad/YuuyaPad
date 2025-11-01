@@ -28,9 +28,6 @@ The following features will not be implemented due to development time:
 1. Make any necessary changes
 1. Select "Build"
 
-# Social Media
-* [X](https://x.com/YuuyaPad)
-
 # License
 This program is released under the MIT License.<br>
 See the `LICENSE` file in the repository for details.
