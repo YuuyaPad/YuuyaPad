@@ -22,6 +22,8 @@ namespace YuuyaPad
 
         private float zoomFactor = 1.0f; // Current zoom factor
 
+        private string currentSearchEngine = "Google";
+
         // RichTextBox printing support class
         public class RichTextBoxPrinter
         {
@@ -239,10 +241,13 @@ namespace YuuyaPad
             f.StartPosition = FormStartPosition.CenterScreen;
 
             f.CurrentFont = richTextBox1.Font;
-            f.InitSettings();
+            f.InitSettings(currentSearchEngine); // Pass the current search engine
 
             if (f.ShowDialog(this) == DialogResult.OK)
             {
+                // Update Search Menu Text
+                UpdateSearchMenuText();
+
                 if (f.SelectedFont != null)
                 {
                     // Change the entire font
@@ -256,6 +261,10 @@ namespace YuuyaPad
                     // Default input is also in the same font
                     richTextBox1.SelectionFont = f.SelectedFont;
                 }
+
+                // Search engine updates
+                if (!string.IsNullOrEmpty(f.SelectedSearchEngine))
+                    currentSearchEngine = f.SelectedSearchEngine;
             }
 
             f.Dispose();
@@ -310,6 +319,7 @@ namespace YuuyaPad
 
             // Get search engine settings
             GetSearchEngine();
+            UpdateSearchMenuText();
 
             // Show status bar by default
             menuItem43.Checked = true;
@@ -345,20 +355,70 @@ namespace YuuyaPad
 
         private void menuItem33_Click(object sender, EventArgs e)
         {
-            // Search
-            // In the future we plan to allow customization of the search engine.
+            string searchText = richTextBox1.SelectedText.Trim();
+            if (string.IsNullOrEmpty(searchText)) return;
 
-            string SearchURL = "https://www.google.com/search?q="; // Default to Google
-            string SearchText = richTextBox1.SelectedText;
+            // Load Latest Settings
+            AppSettings.Load();
 
-            if (string.IsNullOrWhiteSpace(SearchText))
+            string baseUrl = "";
+            string url = "";
+
+            // URL determination based on search engine
+            switch (AppSettings.SearchEngine)
             {
-                // If nothing is selected, nothing happens to prevent unexpected behavior.
-                return;
+                case "Yahoo":
+                    baseUrl = "https://search.yahoo.co.jp/search?p=";
+                    break;
+                case "Bing":
+                    baseUrl = "https://www.bing.com/search?q=";
+                    break;
+                case "DuckDuckGo":
+                    baseUrl = "https://duckduckgo.com/?q=";
+                    break;
+                case "Custom":
+                    baseUrl = AppSettings.CustomSearchUrl;
+                    break;
+                default:
+                    baseUrl = "https://www.google.com/search?q=";
+                    break;
             }
 
-            // Open Google Search
-            Process.Start($"{SearchURL}{Uri.EscapeDataString(SearchText)}");
+            // For Custom URLs
+            if (AppSettings.SearchEngine == "Custom")
+            {
+                if (!string.IsNullOrEmpty(baseUrl))
+                {
+                    // If it contains (searchText), it will be replaced. If it does not contain (searchText), it will be concatenated to the end.
+                    if (baseUrl.Contains("(searchText)"))
+                    {
+                        url = baseUrl.Replace("(searchText)", Uri.EscapeDataString(searchText));
+                    }
+                    else
+                    {
+                        if (!baseUrl.EndsWith("=") && !baseUrl.EndsWith("?") && !baseUrl.EndsWith("/"))
+                            baseUrl += "=";
+                        url = baseUrl + Uri.EscapeDataString(searchText);
+                    }
+                }
+                else
+                {
+                    url = "https://www.google.com/search?q=" + Uri.EscapeDataString(searchText);
+                }
+            }
+            else
+            {
+                url = baseUrl + Uri.EscapeDataString(searchText);
+            }
+
+            try
+            {
+                System.Diagnostics.Process.Start(url);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Could not open browser.\n\n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void menuItem35_Click(object sender, EventArgs e)
@@ -453,8 +513,7 @@ namespace YuuyaPad
             UpdateMenuState();
 
             // Update Search menu item state
-            string selected = richTextBox1.SelectedText;
-            menuItem33.Enabled = !string.IsNullOrWhiteSpace(selected);
+            menuItem33.Enabled = !string.IsNullOrWhiteSpace(richTextBox1.SelectedText);
         }
 
         private void GetSearchEngine()
@@ -557,6 +616,21 @@ namespace YuuyaPad
                 richTextBox1.ZoomFactor = zoomFactor;
                 e.Handled = true;
             }
+        }
+
+        private void UpdateSearchMenuText()
+        {
+            AppSettings.Load();
+
+            string name = AppSettings.SearchEngine;
+
+            if (string.IsNullOrEmpty(name))
+                name = "Google";
+
+            if (name == "Custom")
+                name = "User defined"; // Custom is displayed as User defined
+
+            menuItem33.Text = "&Search " + name;
         }
 
         /// <summary>

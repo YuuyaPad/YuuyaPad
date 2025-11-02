@@ -130,6 +130,7 @@
     <Compile Include="About.Designer.cs">
       <DependentUpon>About.cs</DependentUpon>
     </Compile>
+    <Compile Include="AppSettings.cs" />
     <Compile Include="ExceptionForm.cs">
       <SubType>Form</SubType>
     </Compile>

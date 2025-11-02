@@ -13,6 +13,10 @@ namespace YuuyaPad
         [STAThread]
         static void Main()
         {
+            // Windows Application Initialization
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+
             // Check Operating System
             Version current = Environment.OSVersion.Version;
             Version min = new Version(6, 1, 6790); // Windows 7 or later
@@ -27,10 +31,6 @@ namespace YuuyaPad
                 );
                 return; // Abort Startup
             }
-
-            // Windows Application Initialization
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
 
             // Exception handling settings
             Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
@@ -54,6 +54,9 @@ namespace YuuyaPad
                 e.SetObserved(); // Prevent process termination
                 ShowException(e.Exception, "An unhandled exception occurred in the asynchronous task.");
             };
+
+            // Load Settings
+            AppSettings.Load();
 
             // Context Launch
             AppContext = new MyAppContext();
