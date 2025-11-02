@@ -14,23 +14,26 @@ namespace YuuyaPad
         private void LoadVersionInfo()
         {
             // Configure the About Dialog
+            string ProgramName = "YuuyaPad"; // Program Name
+            string Version = "1.0"; // Version
+            string Copyright = "Copyright © 2020-2025 Yuuya"; // Copyright
+            string License = "This application is licensed under the MIT license."; // License
+            var OS = Environment.OSVersion; // OS
 
-            string version = "1.0"; // Version
-            string copyright = "Copyright © 2020-2025 Yuuya"; // Copyright
-            string license = "This application is licensed under the MIT license."; // License
-            var os = Environment.OSVersion; // OS
-
-            label3.Text = copyright; // Display Copyright
-            label4.Text = $"OS: {os.VersionString}"; // Display OS
-            label5.Text = license; // Display License
+            // And display that information
+            label1.Text = ProgramName; // Display Program Name
+            label2.Text = $"Version {Version}"; // Display Version
+            label3.Text = Copyright; // Display Copyright
+            label4.Text = $"OS: {OS.VersionString}"; // Display OS
+            label5.Text = License; // Display License
 
             // Check if debug
 #if DEBUG
 // Debug
-label2.Text = $"Version: {version} [Debug]";
+label2.Text = $"Version {Version} (Debug)";
 #else
             // Release
-            label2.Text = $"Version: {version}";
+            label2.Text = $"Version {Version}";
 #endif
         }
 

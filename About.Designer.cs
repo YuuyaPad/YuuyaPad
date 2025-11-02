@@ -52,9 +52,9 @@
             this.label1.Font = new System.Drawing.Font("MS UI Gothic", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.label1.Location = new System.Drawing.Point(12, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(133, 27);
+            this.label1.Size = new System.Drawing.Size(95, 27);
             this.label1.TabIndex = 1;
-            this.label1.Text = "YuuyaPad";
+            this.label1.Text = "(name)";
             // 
             // label2
             // 
