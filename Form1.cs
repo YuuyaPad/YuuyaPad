@@ -449,7 +449,12 @@ namespace YuuyaPad
 
         private void richTextBox1_SelectionChanged(object sender, EventArgs e)
         {
+            // Update Edit menu state on selection change
             UpdateMenuState();
+
+            // Update Search menu item state
+            string selected = richTextBox1.SelectedText;
+            menuItem33.Enabled = !string.IsNullOrWhiteSpace(selected);
         }
 
         private void GetSearchEngine()

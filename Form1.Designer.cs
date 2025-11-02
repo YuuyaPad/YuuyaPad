@@ -63,7 +63,12 @@
             this.menuItem38 = new System.Windows.Forms.MenuItem();
             this.menuItem39 = new System.Windows.Forms.MenuItem();
             this.menuItem3 = new System.Windows.Forms.MenuItem();
+            this.menuItem44 = new System.Windows.Forms.MenuItem();
+            this.menuItem45 = new System.Windows.Forms.MenuItem();
+            this.menuItem46 = new System.Windows.Forms.MenuItem();
+            this.menuItem47 = new System.Windows.Forms.MenuItem();
             this.menuItem22 = new System.Windows.Forms.MenuItem();
+            this.menuItem43 = new System.Windows.Forms.MenuItem();
             this.menuItem16 = new System.Windows.Forms.MenuItem();
             this.menuItem17 = new System.Windows.Forms.MenuItem();
             this.menuItem27 = new System.Windows.Forms.MenuItem();
@@ -75,11 +80,6 @@
             this.menuItem7 = new System.Windows.Forms.MenuItem();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.statusBar1 = new System.Windows.Forms.StatusBar();
-            this.menuItem43 = new System.Windows.Forms.MenuItem();
-            this.menuItem44 = new System.Windows.Forms.MenuItem();
-            this.menuItem45 = new System.Windows.Forms.MenuItem();
-            this.menuItem46 = new System.Windows.Forms.MenuItem();
-            this.menuItem47 = new System.Windows.Forms.MenuItem();
             this.SuspendLayout();
             // 
             // mainMenu1
@@ -327,11 +327,44 @@
             this.menuItem43});
             this.menuItem3.Text = "&View";
             // 
+            // menuItem44
+            // 
+            this.menuItem44.Index = 0;
+            this.menuItem44.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.menuItem45,
+            this.menuItem46,
+            this.menuItem47});
+            this.menuItem44.Text = "&Zoom";
+            // 
+            // menuItem45
+            // 
+            this.menuItem45.Index = 0;
+            this.menuItem45.Text = "Zoom &in";
+            this.menuItem45.Click += new System.EventHandler(this.menuItem45_Click);
+            // 
+            // menuItem46
+            // 
+            this.menuItem46.Index = 1;
+            this.menuItem46.Text = "Zoom &Out";
+            this.menuItem46.Click += new System.EventHandler(this.menuItem46_Click);
+            // 
+            // menuItem47
+            // 
+            this.menuItem47.Index = 2;
+            this.menuItem47.Text = "&Reset";
+            this.menuItem47.Click += new System.EventHandler(this.menuItem47_Click);
+            // 
             // menuItem22
             // 
             this.menuItem22.Index = 1;
             this.menuItem22.Text = "Right to &left";
             this.menuItem22.Click += new System.EventHandler(this.menuItem22_Click);
+            // 
+            // menuItem43
+            // 
+            this.menuItem43.Index = 2;
+            this.menuItem43.Text = "&Status Bar";
+            this.menuItem43.Click += new System.EventHandler(this.menuItem43_Click);
             // 
             // menuItem16
             // 
@@ -413,39 +446,6 @@
             this.statusBar1.Size = new System.Drawing.Size(670, 22);
             this.statusBar1.TabIndex = 2;
             this.statusBar1.Text = "text";
-            // 
-            // menuItem43
-            // 
-            this.menuItem43.Index = 2;
-            this.menuItem43.Text = "&Status Bar";
-            this.menuItem43.Click += new System.EventHandler(this.menuItem43_Click);
-            // 
-            // menuItem44
-            // 
-            this.menuItem44.Index = 0;
-            this.menuItem44.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-            this.menuItem45,
-            this.menuItem46,
-            this.menuItem47});
-            this.menuItem44.Text = "&Zoom";
-            // 
-            // menuItem45
-            // 
-            this.menuItem45.Index = 0;
-            this.menuItem45.Text = "Zoom &in";
-            this.menuItem45.Click += new System.EventHandler(this.menuItem45_Click);
-            // 
-            // menuItem46
-            // 
-            this.menuItem46.Index = 1;
-            this.menuItem46.Text = "Zoom &Out";
-            this.menuItem46.Click += new System.EventHandler(this.menuItem46_Click);
-            // 
-            // menuItem47
-            // 
-            this.menuItem47.Index = 2;
-            this.menuItem47.Text = "&Reset";
-            this.menuItem47.Click += new System.EventHandler(this.menuItem47_Click);
             // 
             // Form1
             // 
