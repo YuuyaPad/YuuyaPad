@@ -1,5 +1,6 @@
 # YuuyaPad
-[![Static Badge](https://img.shields.io/badge/latest-Unreleased-A6A6A6)](https://github.com/YuuyaPad/YuuyaPad/releases) [![Static Badge](https://img.shields.io/badge/license-MIT-37CD51)](https://github.com/YuuyaPad/YuuyaPad/blob/main/LICENSE)
+[![Static Badge](https://img.shields.io/badge/latest-Unreleased-A6A6A6)](https://github.com/YuuyaPad/YuuyaPad/releases) [![Static Badge](https://img.shields.io/badge/license-MIT-37CD51)](https://github.com/YuuyaPad/YuuyaPad/blob/main/LICENSE) [![Static Badge](https://img.shields.io/badge/YuuyaPad__Dev-n?label=X&labelColor=000000)](https://x.com/YuuyaPad_Dev)
+
 
 YuuyaPad is a completely free, open-source notepad written in C# that aims to be as feature-rich as possible (although it is inferior to Notepad++).
 
