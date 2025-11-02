@@ -96,7 +96,7 @@ namespace YuuyaPad
             {
                 // This contains code that is for debugging purposes only.
 #if DEBUG
-                form.Text += " [DEBUG]";
+                form.Text += " (Debug)";
 #endif
                 // End of Debug code
 
