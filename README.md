@@ -19,15 +19,7 @@ The following features will not be implemented due to development time:
 * Extensibility via plugins
 
 # How to build
-## Requirements
-* Visual Studio 2022 (other versions have not been tested)
-* The <code>.NET Desktop Development</code> feature is installed
-
-## Build Instructions
-1. Download this repository
-1. Open Visual Studio and `YuuyaPad.sln`
-1. Make any necessary changes
-1. Select "Build"
+For instructions on how to build YuuyaPad from source code, see [Build Instructions](https://yuuyapad.github.io/how-to-build).
 
 # License
 This program is released under the MIT License.<br>
