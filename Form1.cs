@@ -505,6 +505,9 @@ namespace YuuyaPad
             menuItem23.Enabled = hasSelection;
             menuItem24.Enabled = hasSelection;
             menuItem25.Enabled = Clipboard.ContainsText();
+
+            // Search
+            menuItem33.Enabled = !string.IsNullOrWhiteSpace(richTextBox1.SelectedText);
         }
 
         private void richTextBox1_SelectionChanged(object sender, EventArgs e)
