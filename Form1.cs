@@ -2,7 +2,9 @@
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Printing;
+using System.IO;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Windows.Forms;
 
 namespace YuuyaPad
@@ -14,6 +16,7 @@ namespace YuuyaPad
             InitializeComponent();
             UpdateStatusBar();
             DebugMenu();
+            EnableDragAndDrop();
         }
 
         public FindDialog sf = null;
@@ -23,6 +26,8 @@ namespace YuuyaPad
         private float zoomFactor = 1.0f; // Current zoom factor
 
         private string currentSearchEngine = "Google";
+
+        private string currentFilePath = null;
 
         // RichTextBox printing support class
         public class RichTextBoxPrinter
@@ -141,6 +146,38 @@ namespace YuuyaPad
             }
         }
 
+        private void EnableDragAndDrop()
+        {
+            // Enable Drag & Drop
+            richTextBox1.AllowDrop = true;
+
+            // Event Handler Registration
+            richTextBox1.DragEnter += richTextBox1_DragEnter;
+            richTextBox1.DragDrop += richTextBox1_DragDrop;
+        }
+
+        private void richTextBox1_DragEnter(object sender, DragEventArgs e)
+        {
+            // Show copy effect only when file is dropped
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+                e.Effect = DragDropEffects.Copy;
+            else
+                e.Effect = DragDropEffects.None;
+        }
+
+        private void richTextBox1_DragDrop(object sender, DragEventArgs e)
+        {
+            // Get the path of the dropped file
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+
+            if (files != null && files.Length > 0)
+            {
+                // Still can't open the file
+                Placeholder();
+                // OpenFile();
+            }
+        }
+
         public void ApplyFontToRichTextBox(RichTextBox rtb, Font newFont)
         {
             if (rtb == null || newFont == null) return;
@@ -217,19 +254,52 @@ namespace YuuyaPad
         private void menuItem9_Click(object sender, EventArgs e)
         {
             // Open
-            Placeholder();
+            using (OpenFileDialog ofd = new OpenFileDialog())
+            {
+                currentFilePath = ofd.FileName;
+
+                ofd.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*";
+                ofd.Title = "Open";
+
+                if (ofd.ShowDialog() == DialogResult.OK)
+                {
+                    // I still can't open the file
+                    Placeholder();
+                    //OpenFile();
+                }
+            }
         }
 
         private void menuItem10_Click(object sender, EventArgs e)
         {
             // Save
-            Placeholder();
+            if (!string.IsNullOrEmpty(currentFilePath))
+            {
+                // Overwrite if file already exists
+                SaveToFile(currentFilePath);
+            }
+            else
+            {
+                // If there is no file, it will behave the same as "Save As"
+                menuItem11_Click(sender, e);
+            }
         }
 
         private void menuItem11_Click(object sender, EventArgs e)
         {
             // Save As
-            Placeholder();
+            using (SaveFileDialog sfd = new SaveFileDialog())
+            {
+                sfd.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*";
+                sfd.Title = "Save As";
+                sfd.FileName = Path.GetFileName(currentFilePath) ?? "新しいファイル.txt";
+
+                if (sfd.ShowDialog() == DialogResult.OK)
+                {
+                    currentFilePath = sfd.FileName;
+                    SaveToFile(currentFilePath);
+                }
+            }
         }
 
         private void menuItem17_Click(object sender, EventArgs e)
@@ -634,6 +704,19 @@ namespace YuuyaPad
                 name = "User defined"; // Custom is displayed as User defined
 
             menuItem33.Text = "&Search " + name;
+        }
+
+        private void SaveToFile(string path)
+        {
+            try
+            {
+                //File.WriteAllText(path, richTextBox1.Text, Encoding.UTF8);
+                Placeholder();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred while saving:\n\n{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         /// <summary>
