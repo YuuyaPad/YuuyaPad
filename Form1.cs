@@ -722,9 +722,9 @@ namespace YuuyaPad
         /// <summary>
         /// DEBUG FEATURES
         /// </summary>
-        /// This contains code that is for debugging purposes only.
-        /// This code will only run in the "Debug" configuration, not in the "Release" configuration.
-        /// It is used for development purposes and is not recommended for any other purposes.
+        /// <usage>This contains code that is for debugging purposes only.</usage>
+        /// <desc>This code will only run in the "Debug" configuration, not in the "Release" configuration.</desc>
+        /// <note>It is used for development purposes and is not recommended for any other purposes.</note>
 
         private void DebugMenu() // DEBUG ONLY 
         {
