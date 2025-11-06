@@ -718,6 +718,38 @@ namespace YuuyaPad
             }
         }
 
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            // Prevent beeps from playing when a rich text box has focus using Backspace, Delete, arrow keys, etc.
+            if (richTextBox1.Focused)
+            {
+                switch (keyData)
+                {
+                    case Keys.Back:
+                        if (richTextBox1.SelectionStart == 0 && richTextBox1.SelectionLength == 0)
+                            return true;
+                        break;
+
+                    case Keys.Delete:
+                        if (richTextBox1.SelectionStart >= richTextBox1.TextLength)
+                            return true;
+                        break;
+
+                    case Keys.Left:
+                        if (richTextBox1.SelectionStart == 0 && richTextBox1.SelectionLength == 0)
+                            return true;
+                        break;
+
+                    case Keys.Right:
+                        if (richTextBox1.SelectionStart >= richTextBox1.TextLength)
+                            return true;
+                        break;
+                }
+            }
+
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+
         /// <summary>
         /// DEBUG FEATURES
         /// </summary>
