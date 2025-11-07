@@ -405,13 +405,13 @@
             // menuItem26
             // 
             this.menuItem26.Index = 0;
-            this.menuItem26.Text = "&YuuyaPad Home page";
+            this.menuItem26.Text = "YuuyaPad &Home page";
             this.menuItem26.Click += new System.EventHandler(this.menuItem26_Click);
             // 
             // menuItem5
             // 
             this.menuItem5.Index = 1;
-            this.menuItem5.Text = "&GitHub Page";
+            this.menuItem5.Text = "YuuyaPad &GitHub Page";
             this.menuItem5.Click += new System.EventHandler(this.menuItem5_Click);
             // 
             // menuItem6
