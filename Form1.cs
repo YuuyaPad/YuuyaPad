@@ -198,7 +198,11 @@ namespace YuuyaPad
         {
             // Update the status bar state
             int textLength = richTextBox1.TextLength;
-            statusBar1.Text = $"Character count: {textLength}";
+            int index = richTextBox1.SelectionStart;
+            int line = richTextBox1.GetLineFromCharIndex(index);
+            int col = index - richTextBox1.GetFirstCharIndexOfCurrentLine();
+
+            statusBar1.Text = $"{line + 1} row, {col + 1} column　{textLength} characters";
         }
 
         private void richTextBox1_TextChanged(object sender, EventArgs e)
