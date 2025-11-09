@@ -16,7 +16,7 @@ The higher the feature in the list below, the higher the priority and the shorte
 The following features will not be implemented due to development time:
 * Support for Windows XP/Vista
 * Extensibility via plugins
-* 
+
 # Supported Operating Systems
 YuuyaPad is compatible with Windows 7 and later.
 <br>It is not compatible with earlier versions of Microsoft Windows and macOS, Linux and there are no plans to make it compatible.
