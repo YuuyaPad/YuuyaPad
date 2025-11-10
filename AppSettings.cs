@@ -27,7 +27,7 @@ public static class AppSettings
         }
         catch
         {
-            // 保存失敗は無視
+            // Ignore if save fails
         }
     }
 
@@ -49,7 +49,7 @@ public static class AppSettings
         }
         catch
         {
-            // ロード失敗時はデフォルト値
+            // If loading fails, use default value
         }
     }
 
