@@ -429,6 +429,10 @@ namespace YuuyaPad
             GetSearchEngine();
             UpdateSearchMenuText();
 
+            // Load font settings
+            AppSettings.Load();
+            richTextBox1.Font = AppSettings.GetFont();
+
             // Show status bar by default
             menuItem43.Checked = true;
             statusBar1.Visible = true;

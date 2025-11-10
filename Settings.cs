@@ -52,17 +52,20 @@ namespace YuuyaPad
             // Change Font
             using (FontDialog fd = new FontDialog())
             {
-                // Based on the current or selected font
                 fd.Font = SelectedFont ?? CurrentFont ?? SystemFonts.DefaultFont;
 
                 if (fd.ShowDialog() == DialogResult.OK)
                 {
-                    // To apply to richTextBox1
                     SelectedFont = fd.Font;
 
-                    // Label4's appearance remains the same size, only the font is changed
                     label4.Font = new Font(fd.Font.FontFamily, 9f, fd.Font.Style);
                     label4.Text = $"{fd.Font.Name}, {fd.Font.SizeInPoints}pt";
+
+                    // Save
+                    AppSettings.FontName = fd.Font.Name;
+                    AppSettings.FontSize = fd.Font.SizeInPoints;
+                    AppSettings.FontStyle = fd.Font.Style;
+                    AppSettings.Save();
                 }
             }
         }
