@@ -13,9 +13,18 @@ namespace YuuyaPad
         public Form1()
         {
             InitializeComponent();
+
             UpdateStatusBar();
             DebugMenu();
             EnableDragAndDrop();
+
+            richTextBox1.TextChanged += (s, e) =>
+            {
+                isModified = true;
+                UpdateTitle();
+            };
+
+            UpdateTitle();
         }
 
         public FindDialog sf = null;
@@ -27,6 +36,7 @@ namespace YuuyaPad
         private string currentSearchEngine = "Google";
 
         private string currentFilePath = null;
+        private bool isModified = false;
 
         // RichTextBox printing support class
         public class RichTextBoxPrinter
@@ -173,7 +183,7 @@ namespace YuuyaPad
             {
                 // Still can't open the file
                 Placeholder();
-                // OpenFile();
+                //OpenFile();
             }
         }
 
@@ -251,7 +261,32 @@ namespace YuuyaPad
         private void menuItem8_Click(object sender, EventArgs e)
         {
             // New
-            Placeholder();
+            if (isModified)
+            {
+                var result = MessageBox.Show(
+                    "Do you want to save the current changes?",
+                    "YuuyaPad",
+                    MessageBoxButtons.YesNoCancel,
+                    MessageBoxIcon.Question
+                );
+
+                if (result == DialogResult.Cancel)
+                    return; // If cancelled, discontinue
+
+                if (result == DialogResult.Yes)
+                {
+                    // Save process
+                    Placeholder();
+                    //SaveFile();
+                }
+            }
+
+            // Initialize a new document
+            richTextBox1.Clear();
+            currentFilePath = null;
+            isModified = false;
+
+            UpdateTitle();
         }
 
         private void menuItem9_Click(object sender, EventArgs e)
@@ -720,6 +755,18 @@ namespace YuuyaPad
             {
                 MessageBox.Show($"An error occurred while saving:\n\n{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        // Show the file you are working on in the title bar
+        private void UpdateTitle()
+        {
+            string fileName = string.IsNullOrEmpty(currentFilePath)
+                ? "Untitled"
+                : Path.GetFileName(currentFilePath);
+
+            string modifiedMark = isModified ? "*" : "";
+
+            this.Text = $"{fileName}{modifiedMark} - YuuyaPad";
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
