@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using System;
 using System.Drawing;
 
 public static class AppSettings
@@ -7,9 +8,8 @@ public static class AppSettings
 
     public static string SearchEngine { get; set; } = "Google";
     public static string CustomSearchUrl { get; set; } = "";
-
     public static string FontName { get; set; } = SystemFonts.DefaultFont.Name;
-    public static float FontSize { get; set; } = SystemFonts.DefaultFont.SizeInPoints;
+    public static float FontSize { get; set; } = SystemFonts.DefaultFont.Size;
     public static FontStyle FontStyle { get; set; } = SystemFonts.DefaultFont.Style;
 
     public static void Save()
@@ -27,7 +27,7 @@ public static class AppSettings
         }
         catch
         {
-            // Ignore if save fails
+            // Ignore or log
         }
     }
 
@@ -42,14 +42,14 @@ public static class AppSettings
                     SearchEngine = key.GetValue("SearchEngine", "Google").ToString();
                     CustomSearchUrl = key.GetValue("CustomSearchUrl", "").ToString();
                     FontName = key.GetValue("FontName", SystemFonts.DefaultFont.Name).ToString();
-                    FontSize = float.Parse(key.GetValue("FontSize", SystemFonts.DefaultFont.SizeInPoints).ToString());
-                    FontStyle = (FontStyle)(int)key.GetValue("FontStyle", (int)SystemFonts.DefaultFont.Style);
+                    FontSize = Convert.ToSingle(key.GetValue("FontSize", SystemFonts.DefaultFont.Size));
+                    FontStyle = (FontStyle)Convert.ToInt32(key.GetValue("FontStyle", (int)SystemFonts.DefaultFont.Style));
                 }
             }
         }
         catch
         {
-            // If loading fails, use default value
+            // Use defaults if loading fails
         }
     }
 
@@ -63,5 +63,13 @@ public static class AppSettings
         {
             return SystemFonts.DefaultFont;
         }
+    }
+
+    public static void SetFont(Font font)
+    {
+        FontName = font.Name;
+        FontSize = font.Size;
+        FontStyle = font.Style;
+        Save();
     }
 }

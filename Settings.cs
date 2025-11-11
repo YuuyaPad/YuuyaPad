@@ -61,11 +61,8 @@ namespace YuuyaPad
                     label4.Font = new Font(fd.Font.FontFamily, 9f, fd.Font.Style);
                     label4.Text = $"{fd.Font.Name}, {fd.Font.SizeInPoints}pt";
 
-                    // Save
-                    AppSettings.FontName = fd.Font.Name;
-                    AppSettings.FontSize = fd.Font.SizeInPoints;
-                    AppSettings.FontStyle = fd.Font.Style;
-                    AppSettings.Save();
+                    // Save Font
+                    AppSettings.SetFont(fd.Font);
                 }
             }
         }

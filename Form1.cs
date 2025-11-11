@@ -240,6 +240,11 @@ namespace YuuyaPad
 
         private void menuItem13_Click(object sender, EventArgs e)
         {
+            // New Window
+            // Apply Font Settings to New Window
+            AppSettings.Load();
+            richTextBox1.Font = AppSettings.GetFont();
+
             // To open a new Form1, use Program.AppContext
             if (Program.AppContext != null)
             {
@@ -423,19 +428,23 @@ namespace YuuyaPad
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            // Load saved settings
+            AppSettings.Load();
+
+            // Load font settings as the top priority
+            Font loadedFont = AppSettings.GetFont();
+            richTextBox1.Font = loadedFont;
+            currentFont = loadedFont;
+
+            // Update label etc.
+            ApplyFontSettings();
+
             // Initializing the Edit menu
             UpdateMenuState();
 
             // Get search engine settings
             GetSearchEngine();
             UpdateSearchMenuText();
-
-            // Load font settings
-            AppSettings.Load();
-            richTextBox1.Font = AppSettings.GetFont();
-
-            // Apply font settings to the entire RichTextBox
-            ApplyFontSettings();
 
             // Show status bar by default
             menuItem43.Checked = true;
@@ -448,11 +457,9 @@ namespace YuuyaPad
             // Set the initial zoom factor
             richTextBox1.ZoomFactor = zoomFactor;
 
-            currentFont = richTextBox1.Font;
-
+            // Prevent font from resetting after full delete
             richTextBox1.TextChanged += (s, ev) =>
             {
-                // Prevent fonts from resetting after a full delete
                 if (richTextBox1.TextLength == 0 && richTextBox1.Font != currentFont)
                 {
                     richTextBox1.Font = currentFont;
@@ -812,6 +819,20 @@ namespace YuuyaPad
             }
 
             return base.ProcessCmdKey(ref msg, keyData);
+        }
+
+        private void Form1_Shown(object sender, EventArgs e)
+        {
+            // Apply fonts reliably
+            Font f = AppSettings.GetFont();
+
+            // If left empty it will be ignored, so apply it for just a moment and then return it
+            richTextBox1.Text = " ";
+            richTextBox1.SelectAll();
+            richTextBox1.SelectionFont = f;
+            richTextBox1.Text = string.Empty;
+
+            currentFont = f;
         }
 
         /// <summary>
