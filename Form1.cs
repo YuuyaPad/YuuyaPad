@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Printing;
 using System.IO;
+using System.Reflection.Emit;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
@@ -433,6 +434,9 @@ namespace YuuyaPad
             AppSettings.Load();
             richTextBox1.Font = AppSettings.GetFont();
 
+            // Apply font settings to the entire RichTextBox
+            ApplyFontSettings();
+
             // Show status bar by default
             menuItem43.Checked = true;
             statusBar1.Visible = true;
@@ -771,6 +775,11 @@ namespace YuuyaPad
             string modifiedMark = isModified ? "*" : "";
 
             this.Text = $"{fileName}{modifiedMark} - YuuyaPad";
+        }
+
+        private void ApplyFontSettings()
+        {
+            // Apply font settings from AppSettings to the entire RichTextBox
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
