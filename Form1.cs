@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Printing;
 using System.IO;
-using System.Reflection.Emit;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
@@ -242,8 +241,6 @@ namespace YuuyaPad
         {
             // New Window
             // Apply Font Settings to New Window
-            AppSettings.Load();
-            richTextBox1.Font = AppSettings.GetFont();
 
             // To open a new Form1, use Program.AppContext
             if (Program.AppContext != null)
@@ -438,9 +435,6 @@ namespace YuuyaPad
             Font loadedFont = AppSettings.GetFont();
             richTextBox1.Font = loadedFont;
             currentFont = loadedFont;
-
-            // Update label etc.
-            ApplyFontSettings();
 
             // Initializing the Edit menu
             UpdateMenuState();
@@ -787,11 +781,6 @@ namespace YuuyaPad
             this.Text = $"{fileName}{modifiedMark} - YuuyaPad";
         }
 
-        private void ApplyFontSettings()
-        {
-            // Apply font settings from AppSettings to the entire RichTextBox
-        }
-
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             // Prevent beeps from playing when a rich text box has focus using Backspace, Delete, arrow keys, etc.
@@ -822,20 +811,6 @@ namespace YuuyaPad
             }
 
             return base.ProcessCmdKey(ref msg, keyData);
-        }
-
-        private void Form1_Shown(object sender, EventArgs e)
-        {
-            // Apply fonts reliably
-            Font f = AppSettings.GetFont();
-
-            // If left empty it will be ignored, so apply it for just a moment and then return it
-            richTextBox1.Text = " ";
-            richTextBox1.SelectAll();
-            richTextBox1.SelectionFont = f;
-            richTextBox1.Text = string.Empty;
-
-            currentFont = f;
         }
 
         /// <summary>
