@@ -333,7 +333,6 @@ namespace YuuyaPad
             {
                 sfd.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*";
                 sfd.Title = "Save As";
-                sfd.FileName = Path.GetFileName(currentFilePath) ?? "新しいファイル.txt";
 
                 if (sfd.ShowDialog() == DialogResult.OK)
                 {
