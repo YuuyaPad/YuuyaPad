@@ -431,6 +431,9 @@ namespace YuuyaPad
             // Load saved settings
             AppSettings.Load();
 
+            // Use system UI font
+            richTextBox1.LanguageOption = RichTextBoxLanguageOptions.UIFonts;
+
             // Load font settings as the top priority
             Font loadedFont = AppSettings.GetFont();
             richTextBox1.Font = loadedFont;
