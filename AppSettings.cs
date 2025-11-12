@@ -4,6 +4,7 @@ using System.Drawing;
 
 public static class AppSettings
 {
+    // Saved in HKCU\Software\Yuuya\YuuyaPad
     private const string RegistryPath = @"Software\Yuuya\YuuyaPad";
 
     public static string SearchEngine { get; set; } = "Google";
@@ -57,10 +58,12 @@ public static class AppSettings
     {
         try
         {
+            // Create and return the font from saved settings
             return new Font(FontName, FontSize, FontStyle);
         }
         catch
         {
+            // If font creation fails, return default font
             return SystemFonts.DefaultFont;
         }
     }
