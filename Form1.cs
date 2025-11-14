@@ -789,17 +789,39 @@ namespace YuuyaPad
                 sfd.Title = "Save As";
                 sfd.Filter = "Text File (*.txt)|*.txt|All Files (*.*)|*.*";
 
-                // Default file name
+                // Replace invalid characters in file names
+                string SanitizeFileName(string name)
+                {
+                    char[] invalid = Path.GetInvalidFileNameChars();
+                    foreach (char c in invalid)
+                    {
+                        name = name.Replace(c.ToString(), "");
+                    }
+                    return name;
+                }
+
+                string suggestedName;
+
                 if (string.IsNullOrEmpty(currentFilePath))
                 {
                     if (richTextBox1.TextLength > 0)
-                        sfd.FileName = richTextBox1.Text.Substring(0, Math.Min(10, richTextBox1.Text.Length));
+                    {
+                        suggestedName = richTextBox1.Text.Substring(0, Math.Min(10, richTextBox1.Text.Length));
+                        suggestedName = SanitizeFileName(suggestedName);
+
+                        if (string.IsNullOrWhiteSpace(suggestedName))
+                            suggestedName = "Untitled";
+                    }
                     else
-                        sfd.FileName = "Untitled.txt";
+                    {
+                        suggestedName = "Untitled";
+                    }
+
+                    sfd.FileName = suggestedName + ".txt";
                 }
                 else
                 {
-                    sfd.FileName = Path.GetFileName(currentFilePath);
+                    sfd.FileName = SanitizeFileName(Path.GetFileName(currentFilePath));
                 }
 
                 if (sfd.ShowDialog() == DialogResult.OK)
