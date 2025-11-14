@@ -463,15 +463,6 @@ namespace YuuyaPad
             };
         }
 
-        private void Placeholder()
-        {
-            // Displayed when trying to access a feature under construction
-            MessageBox.Show("This feature is still under construction",
-                "YuuyaPad",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.None);
-        }
-
         private void menuItem33_Click(object sender, EventArgs e)
         {
             string searchText = richTextBox1.SelectedText.Trim();
@@ -778,6 +769,15 @@ namespace YuuyaPad
             string modifiedMark = isModified ? "*" : "";
 
             this.Text = $"{fileName}{modifiedMark} - YuuyaPad";
+        }
+
+        private void Placeholder()
+        {
+            // Displayed when trying to access a feature under construction
+            MessageBox.Show("This feature is still under construction",
+                "YuuyaPad",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.None);
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
