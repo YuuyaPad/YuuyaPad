@@ -227,7 +227,8 @@ namespace YuuyaPad
 
         private void menuItem7_Click(object sender, EventArgs e)
         {
-            // Show About Dialog
+            // About
+
             using (About about = new About())
             {
                 // Displayed in the center of the program
@@ -241,9 +242,7 @@ namespace YuuyaPad
         private void menuItem13_Click(object sender, EventArgs e)
         {
             // New Window
-            // Apply Font Settings to New Window
 
-            // To open a new Form1, use Program.AppContext
             if (Program.AppContext != null)
             {
                 Program.AppContext.OpenForm1(new Form1());
@@ -266,19 +265,13 @@ namespace YuuyaPad
         {
             // New
             if (!CheckSaveBeforeClose())
-                return; // キャンセルされた場合
-
-            // 新規作成
-            currentFilePath = null;
-            richTextBox1.Clear();
-            isModified = false;
-            UpdateTitle();
+                return; // If cancelled
 
             // Initialize a new document
+            currentFilePath = null;
             richTextBox1.Clear();
             currentFilePath = null;
             isModified = false;
-
             UpdateTitle();
         }
 
