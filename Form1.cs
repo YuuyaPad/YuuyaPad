@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Printing;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
@@ -331,8 +332,46 @@ namespace YuuyaPad
             // Save As
             using (SaveFileDialog sfd = new SaveFileDialog())
             {
+                // Set filter and title
                 sfd.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*";
                 sfd.Title = "Save As";
+
+                // Set the file name before opening the save dialog
+                string suggestedName;
+
+                if (string.IsNullOrEmpty(currentFilePath))
+                {
+                    // If unsaved: First 10 characters of text (default if empty)
+                    var text = richTextBox1.Text;
+                    if (string.IsNullOrEmpty(text))
+                    {
+                        suggestedName = "Untitled.txt";
+                    }
+                    else
+                    {
+                        // The first 10 characters are used as the file name, and spaces and prohibited characters are removed.
+                        string first10 = new string(
+                            text.Take(10).ToArray()
+                        );
+
+                        // Exclude characters that cannot be used in file names
+                        foreach (char c in Path.GetInvalidFileNameChars())
+                        {
+                            first10 = first10.Replace(c.ToString(), "");
+                        }
+
+                        // If there is at least one character remaining, it will be accepted.
+                        suggestedName = (string.IsNullOrWhiteSpace(first10) ? "" : first10) + ".txt";
+                    }
+                }
+                else
+                {
+                    // If already saved: Use only the file name
+                    suggestedName = Path.GetFileName(currentFilePath);
+                }
+
+                // Set name in save dialog
+                sfd.FileName = suggestedName;
 
                 if (sfd.ShowDialog() == DialogResult.OK)
                 {
