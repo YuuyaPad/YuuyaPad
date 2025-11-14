@@ -69,6 +69,13 @@
             this.menuItem47 = new System.Windows.Forms.MenuItem();
             this.menuItem22 = new System.Windows.Forms.MenuItem();
             this.menuItem43 = new System.Windows.Forms.MenuItem();
+            this.menuItem48 = new System.Windows.Forms.MenuItem();
+            this.menuItem49 = new System.Windows.Forms.MenuItem();
+            this.menuItem50 = new System.Windows.Forms.MenuItem();
+            this.menuItem51 = new System.Windows.Forms.MenuItem();
+            this.menuItem52 = new System.Windows.Forms.MenuItem();
+            this.menuItem53 = new System.Windows.Forms.MenuItem();
+            this.menuItem54 = new System.Windows.Forms.MenuItem();
             this.menuItem16 = new System.Windows.Forms.MenuItem();
             this.menuItem17 = new System.Windows.Forms.MenuItem();
             this.menuItem27 = new System.Windows.Forms.MenuItem();
@@ -80,13 +87,6 @@
             this.menuItem7 = new System.Windows.Forms.MenuItem();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.statusBar1 = new System.Windows.Forms.StatusBar();
-            this.menuItem48 = new System.Windows.Forms.MenuItem();
-            this.menuItem49 = new System.Windows.Forms.MenuItem();
-            this.menuItem50 = new System.Windows.Forms.MenuItem();
-            this.menuItem51 = new System.Windows.Forms.MenuItem();
-            this.menuItem52 = new System.Windows.Forms.MenuItem();
-            this.menuItem53 = new System.Windows.Forms.MenuItem();
-            this.menuItem54 = new System.Windows.Forms.MenuItem();
             this.SuspendLayout();
             // 
             // mainMenu1
@@ -374,6 +374,50 @@
             this.menuItem43.Text = "&Status Bar";
             this.menuItem43.Click += new System.EventHandler(this.menuItem43_Click);
             // 
+            // menuItem48
+            // 
+            this.menuItem48.Index = 3;
+            this.menuItem48.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.menuItem49});
+            this.menuItem48.Text = "&Tools";
+            // 
+            // menuItem49
+            // 
+            this.menuItem49.Index = 0;
+            this.menuItem49.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.menuItem50,
+            this.menuItem51,
+            this.menuItem52,
+            this.menuItem53,
+            this.menuItem54});
+            this.menuItem49.Text = "Character &code";
+            this.menuItem49.Click += new System.EventHandler(this.menuItem49_Click);
+            // 
+            // menuItem50
+            // 
+            this.menuItem50.Index = 0;
+            this.menuItem50.Text = "UTF-8";
+            // 
+            // menuItem51
+            // 
+            this.menuItem51.Index = 1;
+            this.menuItem51.Text = "UTF-8 (with BOM)";
+            // 
+            // menuItem52
+            // 
+            this.menuItem52.Index = 2;
+            this.menuItem52.Text = "Shift-JIS";
+            // 
+            // menuItem53
+            // 
+            this.menuItem53.Index = 3;
+            this.menuItem53.Text = "EUC-JP";
+            // 
+            // menuItem54
+            // 
+            this.menuItem54.Index = 4;
+            this.menuItem54.Text = "Unicode";
+            // 
             // menuItem16
             // 
             this.menuItem16.Index = 4;
@@ -454,50 +498,6 @@
             this.statusBar1.Size = new System.Drawing.Size(670, 22);
             this.statusBar1.TabIndex = 2;
             this.statusBar1.Text = "text";
-            // 
-            // menuItem48
-            // 
-            this.menuItem48.Index = 3;
-            this.menuItem48.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-            this.menuItem49});
-            this.menuItem48.Text = "&Tools";
-            // 
-            // menuItem49
-            // 
-            this.menuItem49.Index = 0;
-            this.menuItem49.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-            this.menuItem50,
-            this.menuItem51,
-            this.menuItem52,
-            this.menuItem53,
-            this.menuItem54});
-            this.menuItem49.Text = "Character &code";
-            this.menuItem49.Click += new System.EventHandler(this.menuItem49_Click);
-            // 
-            // menuItem50
-            // 
-            this.menuItem50.Index = 0;
-            this.menuItem50.Text = "UTF-8";
-            // 
-            // menuItem51
-            // 
-            this.menuItem51.Index = 1;
-            this.menuItem51.Text = "UTF-8 (with BOM)";
-            // 
-            // menuItem52
-            // 
-            this.menuItem52.Index = 2;
-            this.menuItem52.Text = "Shift-JIS";
-            // 
-            // menuItem53
-            // 
-            this.menuItem53.Index = 3;
-            this.menuItem53.Text = "EUC-JP";
-            // 
-            // menuItem54
-            // 
-            this.menuItem54.Index = 4;
-            this.menuItem54.Text = "Unicode";
             // 
             // Form1
             // 

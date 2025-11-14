@@ -31,6 +31,12 @@ namespace YuuyaPad
 
         public FindDialog sf = null;
 
+        private MenuItem menuEncodingUtf8;
+        private MenuItem menuEncodingUtf8Bom;
+        private MenuItem menuEncodingSjis;
+        private MenuItem menuEncodingEucJp;
+        private MenuItem menuEncodingUnicode;
+
         private Font currentFont;
 
         private float zoomFactor = 1.0f; // Current zoom factor
@@ -40,7 +46,7 @@ namespace YuuyaPad
         private string currentFilePath = null;
         private bool isModified = false;
 
-        private Encoding currentEncoding = Encoding.UTF8;
+        private Encoding currentEncoding = new UTF8Encoding(false); // 初期値はUTF-8(BOMなし)
 
         // RichTextBox printing support class
         public class RichTextBoxPrinter
@@ -410,6 +416,8 @@ namespace YuuyaPad
             Font loadedFont = AppSettings.GetFont();
             richTextBox1.Font = loadedFont;
             currentFont = loadedFont;
+
+            InitializeEncodingMenu();
 
             // Initializing the Edit menu
             UpdateMenuState();
@@ -836,6 +844,48 @@ namespace YuuyaPad
                 default:
                     return false; // Cancel
             }
+        }
+
+        private void InitializeEncodingMenu()
+        {
+            // Add a click event
+            menuItem50.Click += EncodingMenu_Click;  // UTF-8
+            menuItem51.Click += EncodingMenu_Click;  // UTF-8 (BOM)
+            menuItem52.Click += EncodingMenu_Click;  // Shift-JIS
+            menuItem53.Click += EncodingMenu_Click;  // EUC-JP
+            menuItem54.Click += EncodingMenu_Click;  // Unicode
+
+            // Default: UTF-8
+            menuItem50.Checked = true;
+        }
+
+        private void EncodingMenu_Click(object sender, EventArgs e)
+        {
+            // Uncheck all
+            menuItem50.Checked = false;
+            menuItem51.Checked = false;
+            menuItem52.Checked = false;
+            menuItem53.Checked = false;
+            menuItem54.Checked = false;
+
+            // Check selected menu item
+            MenuItem item = (MenuItem)sender;
+            item.Checked = true;
+
+            if (item == menuItem50)
+                currentEncoding = new UTF8Encoding(false); // UTF-8 (Without BOM)
+
+            else if (item == menuItem51)
+                currentEncoding = new UTF8Encoding(true); // UTF-8 (With BOM)
+
+            else if (item == menuItem52)
+                currentEncoding = Encoding.GetEncoding("shift_jis"); // Shift-JIS
+
+            else if (item == menuItem53)
+                currentEncoding = Encoding.GetEncoding("euc-jp"); // EUC-JP
+
+            else if (item == menuItem54)
+                currentEncoding = Encoding.Unicode; // Unicode
         }
 
         private void Placeholder()
