@@ -265,25 +265,14 @@ namespace YuuyaPad
         private void menuItem8_Click(object sender, EventArgs e)
         {
             // New
-            if (isModified)
-            {
-                var result = MessageBox.Show(
-                    "Do you want to save the current changes?",
-                    "YuuyaPad",
-                    MessageBoxButtons.YesNoCancel,
-                    MessageBoxIcon.Question
-                );
+            if (!CheckSaveBeforeClose())
+                return; // キャンセルされた場合
 
-                if (result == DialogResult.Cancel)
-                    return; // If cancelled, discontinue
-
-                if (result == DialogResult.Yes)
-                {
-                    // Save process
-                    Placeholder();
-                    //SaveFile();
-                }
-            }
+            // 新規作成
+            currentFilePath = null;
+            richTextBox1.Clear();
+            isModified = false;
+            UpdateTitle();
 
             // Initialize a new document
             richTextBox1.Clear();
@@ -318,7 +307,7 @@ namespace YuuyaPad
             if (!string.IsNullOrEmpty(currentFilePath))
             {
                 // Overwrite if file already exists
-                SaveToFile(currentFilePath);
+                SaveFile(currentFilePath);
             }
             else
             {
@@ -330,55 +319,7 @@ namespace YuuyaPad
         private void menuItem11_Click(object sender, EventArgs e)
         {
             // Save As
-            using (SaveFileDialog sfd = new SaveFileDialog())
-            {
-                // Set filter and title
-                sfd.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*";
-                sfd.Title = "Save As";
-
-                // Set the file name before opening the save dialog
-                string suggestedName;
-
-                if (string.IsNullOrEmpty(currentFilePath))
-                {
-                    // If unsaved: First 10 characters of text (default if empty)
-                    var text = richTextBox1.Text;
-                    if (string.IsNullOrEmpty(text))
-                    {
-                        suggestedName = "Untitled.txt";
-                    }
-                    else
-                    {
-                        // The first 10 characters are used as the file name, and spaces and prohibited characters are removed.
-                        string first10 = new string(
-                            text.Take(10).ToArray()
-                        );
-
-                        // Exclude characters that cannot be used in file names
-                        foreach (char c in Path.GetInvalidFileNameChars())
-                        {
-                            first10 = first10.Replace(c.ToString(), "");
-                        }
-
-                        // If there is at least one character remaining, it will be accepted.
-                        suggestedName = (string.IsNullOrWhiteSpace(first10) ? "" : first10) + ".txt";
-                    }
-                }
-                else
-                {
-                    // If already saved: Use only the file name
-                    suggestedName = Path.GetFileName(currentFilePath);
-                }
-
-                // Set name in save dialog
-                sfd.FileName = suggestedName;
-
-                if (sfd.ShowDialog() == DialogResult.OK)
-                {
-                    currentFilePath = sfd.FileName;
-                    SaveToFile(currentFilePath);
-                }
-            }
+            SaveFileAs();
         }
 
         private void menuItem17_Click(object sender, EventArgs e)
@@ -770,6 +711,14 @@ namespace YuuyaPad
             }
         }
 
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (!CheckSaveBeforeClose())
+            {
+                e.Cancel = true;
+            }
+        }
+
         private void UpdateSearchMenuText()
         {
             AppSettings.Load();
@@ -785,16 +734,25 @@ namespace YuuyaPad
             menuItem33.Text = "&Search " + name;
         }
 
-        private void SaveToFile(string path)
+        private bool SaveFile(string path)
         {
             try
             {
-                //File.WriteAllText(path, richTextBox1.Text, Encoding.UTF8);
-                Placeholder();
+                Placeholder();  // Save processing is not yet implemented
+
+                isModified = false;
+                return true;
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"An error occurred while saving:\n\n{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(
+                    $"An error occurred while saving:\n{ex.Message}",
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+
+                return false;
             }
         }
 
@@ -808,6 +766,71 @@ namespace YuuyaPad
             string modifiedMark = isModified ? "*" : "";
 
             this.Text = $"{fileName}{modifiedMark} - YuuyaPad";
+        }
+
+        // Save As function
+        private bool SaveFileAs()
+        {
+            using (SaveFileDialog sfd = new SaveFileDialog())
+            {
+                sfd.Title = "Save As";
+                sfd.Filter = "Text File (*.txt)|*.txt|All Files (*.*)|*.*";
+
+                // Default file name
+                if (string.IsNullOrEmpty(currentFilePath))
+                {
+                    if (richTextBox1.TextLength > 0)
+                        sfd.FileName = richTextBox1.Text.Substring(0, Math.Min(10, richTextBox1.Text.Length));
+                    else
+                        sfd.FileName = "Untitled.txt";
+                }
+                else
+                {
+                    sfd.FileName = Path.GetFileName(currentFilePath);
+                }
+
+                if (sfd.ShowDialog() == DialogResult.OK)
+                {
+                    currentFilePath = sfd.FileName;
+                    return SaveFile(currentFilePath);
+                }
+
+                return false;
+            }
+        }
+
+        private bool CheckSaveBeforeClose()
+        {
+            if (!isModified)
+                return true;
+
+            string docName = string.IsNullOrEmpty(currentFilePath)
+                ? "Untitled"
+                : currentFilePath;
+
+            // Save confirmation message
+            var result = MessageBox.Show(
+                $"{docName} has been modified and not yet saved.\nDo you want to save your changes?",
+                "YuuyaPad",
+                MessageBoxButtons.YesNoCancel,
+                MessageBoxIcon.Warning
+            );
+
+            switch (result)
+            {
+                case DialogResult.Yes:
+                    if (string.IsNullOrEmpty(currentFilePath))
+                        return SaveFileAs(); // New file
+                    else
+                        return SaveFile(currentFilePath); // Save
+
+                case DialogResult.No:
+                    return true; // Close without saving
+
+                case DialogResult.Cancel:
+                default:
+                    return false; // Cancel
+            }
         }
 
         private void Placeholder()
