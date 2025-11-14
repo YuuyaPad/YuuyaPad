@@ -5,6 +5,7 @@ using System.Drawing.Printing;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Windows.Forms;
 
 namespace YuuyaPad
@@ -38,6 +39,8 @@ namespace YuuyaPad
 
         private string currentFilePath = null;
         private bool isModified = false;
+
+        private Encoding currentEncoding = Encoding.UTF8;
 
         // RichTextBox printing support class
         public class RichTextBoxPrinter
@@ -423,6 +426,10 @@ namespace YuuyaPad
             this.KeyPreview = true;
             this.KeyDown += Form1_KeyDown;
 
+            // Set default encoding to UTF-8 (Without BOM)
+            menuItem50.Checked = true;
+            currentEncoding = new UTF8Encoding(false);
+
             // Set the initial zoom factor
             richTextBox1.ZoomFactor = zoomFactor;
 
@@ -679,6 +686,11 @@ namespace YuuyaPad
             if (zoomFactor > 5.0f) zoomFactor = 5.0f;
 
             richTextBox1.ZoomFactor = zoomFactor;
+        }
+
+        private void menuItem49_Click(object sender, EventArgs e)
+        {
+            // Changing the character code
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
