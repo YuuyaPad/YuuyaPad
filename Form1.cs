@@ -46,7 +46,7 @@ namespace YuuyaPad
         private string currentFilePath = null;
         private bool isModified = false;
 
-        private Encoding currentEncoding = new UTF8Encoding(false); // 初期値はUTF-8(BOMなし)
+        private Encoding currentEncoding = new UTF8Encoding(false);
 
         // RichTextBox printing support class
         public class RichTextBoxPrinter
