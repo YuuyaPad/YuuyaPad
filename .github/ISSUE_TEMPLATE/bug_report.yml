@@ -1,5 +1,5 @@
 name: Bug Report
-description: Report a bug in the YuuyaPad
+description: Report a issue in the YuuyaPad
 labels: ["bug"]
 body:
   - type: input
