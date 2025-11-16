@@ -5,7 +5,7 @@ using System.Drawing;
 public static class AppSettings
 {
     // Saved in HKCU\Software\Yuuya\YuuyaPad
-    private const string RegistryPath = @"Software\Yuuya\Yuuya\YuuyaPad";
+    private const string RegistryPath = @"Software\Yuuya\YuuyaPad";
 
     public static string SearchEngine { get; set; } = "Google";
     public static string CustomSearchUrl { get; set; } = "";
