@@ -735,17 +735,6 @@ namespace YuuyaPad
             }
         }
 
-        private void RichTextBox1_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Right)
-            {
-                contextMenu1.MenuItems[0].Enabled = richTextBox1.SelectionLength > 0;        // 切り取り
-                contextMenu1.MenuItems[1].Enabled = richTextBox1.SelectionLength > 0;        // コピー
-                contextMenu1.MenuItems[2].Enabled = Clipboard.ContainsText();                // 貼り付け
-                contextMenu1.MenuItems[4].Enabled = richTextBox1.TextLength > 0;             // 全選択
-            }
-        }
-
         private void UpdateSearchMenuText()
         {
             AppSettings.Load();
