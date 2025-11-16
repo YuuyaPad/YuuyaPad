@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace YuuyaPad
@@ -18,11 +19,12 @@ namespace YuuyaPad
             string Version = "1.0"; // Version
             string Copyright = "Copyright © 2020-2025 Yuuya"; // Copyright
             string License = "This application is licensed under the MIT license."; // License
+            string arch = RuntimeInformation.ProcessArchitecture.ToString(); // Architecture
             var OS = Environment.OSVersion; // OS
 
             // And display that information
             label1.Text = ProgramName; // Display Program Name
-            label2.Text = $"Version {Version}"; // Display Version
+            label2.Text = $"Version {Version} [{arch}]"; // Display Version
             label3.Text = Copyright; // Display Copyright
             label4.Text = $"OS: {OS.VersionString}"; // Display OS
             label5.Text = License; // Display License
@@ -30,10 +32,7 @@ namespace YuuyaPad
             // Check if debug
 #if DEBUG
 // Debug
-label2.Text = $"Version {Version} (Debug)";
-#else
-            // Release
-            label2.Text = $"Version {Version}";
+label2.Text = $"Version {Version} [{arch}, Debug]";
 #endif
         }
 
