@@ -5,13 +5,14 @@ using System.Drawing;
 public static class AppSettings
 {
     // Saved in HKCU\Software\Yuuya\YuuyaPad
-    private const string RegistryPath = @"Software\Yuuya\YuuyaPad";
+    private const string RegistryPath = @"Software\Yuuya\Yuuya\YuuyaPad";
 
     public static string SearchEngine { get; set; } = "Google";
     public static string CustomSearchUrl { get; set; } = "";
     public static string FontName { get; set; } = SystemFonts.DefaultFont.Name;
     public static float FontSize { get; set; } = SystemFonts.DefaultFont.Size;
     public static FontStyle FontStyle { get; set; } = SystemFonts.DefaultFont.Style;
+    public static bool ShowStatusBar { get; set; } = true;
 
     public static void Save()
     {
@@ -24,6 +25,7 @@ public static class AppSettings
                 key.SetValue("FontName", FontName);
                 key.SetValue("FontSize", FontSize);
                 key.SetValue("FontStyle", (int)FontStyle);
+                key.SetValue("ShowStatusBar", ShowStatusBar ? 1 : 0, RegistryValueKind.DWord);
             }
         }
         catch
@@ -45,6 +47,7 @@ public static class AppSettings
                     FontName = key.GetValue("FontName", SystemFonts.DefaultFont.Name).ToString();
                     FontSize = Convert.ToSingle(key.GetValue("FontSize", SystemFonts.DefaultFont.Size));
                     FontStyle = (FontStyle)Convert.ToInt32(key.GetValue("FontStyle", (int)SystemFonts.DefaultFont.Style));
+                    ShowStatusBar = Convert.ToInt32(key.GetValue("ShowStatusBar", 1)) != 0;
                 }
             }
         }
@@ -58,12 +61,10 @@ public static class AppSettings
     {
         try
         {
-            // Create and return the font from saved settings
             return new Font(FontName, FontSize, FontStyle);
         }
         catch
         {
-            // If font creation fails, return default font
             return SystemFonts.DefaultFont;
         }
     }

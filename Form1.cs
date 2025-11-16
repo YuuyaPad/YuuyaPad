@@ -422,8 +422,8 @@ namespace YuuyaPad
             UpdateSearchMenuText();
 
             // Show status bar by default
-            menuItem43.Checked = true;
-            statusBar1.Visible = true;
+            statusBar1.Visible = AppSettings.ShowStatusBar;
+            menuItem43.Checked = AppSettings.ShowStatusBar;
 
             // Register shortcut keys for zoom
             this.KeyPreview = true;
@@ -640,9 +640,12 @@ namespace YuuyaPad
 
         private void menuItem43_Click(object sender, EventArgs e)
         {
-            // Status Bar
+            // Show Status Bar
             menuItem43.Checked = !menuItem43.Checked;
             statusBar1.Visible = menuItem43.Checked;
+
+            AppSettings.ShowStatusBar = menuItem43.Checked;
+            AppSettings.Save();
         }
 
         private void menuItem45_Click(object sender, EventArgs e)
