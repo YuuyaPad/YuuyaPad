@@ -417,6 +417,7 @@ namespace YuuyaPad
             richTextBox1.Font = loadedFont;
             currentFont = loadedFont;
 
+            // Initialize Encoding menu
             InitializeEncodingMenu();
 
             // Initializing the Edit menu
