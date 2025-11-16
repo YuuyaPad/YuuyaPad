@@ -76,6 +76,9 @@ namespace YuuyaPad
         {
             AppSettings.Load();
 
+            // Disable dark mode if you are not Windows 10 1809 or later
+            DisableDarkModeControlsIfNotSupported();
+
             // Radio buttons reflect current settings
             string engine = AppSettings.SearchEngine;
             textBox1.Text = AppSettings.CustomSearchUrl;
@@ -105,6 +108,26 @@ namespace YuuyaPad
         private void SaveSettings()
         {
             SearchEngine();
+        }
+
+        private void DisableDarkModeControlsIfNotSupported()
+        {
+            // Check if your system is Windows 10 1809 or later
+            bool supportsDarkMode =
+                Environment.OSVersion.Platform == PlatformID.Win32NT &&
+                Environment.OSVersion.Version.Major >= 10 &&
+                Environment.OSVersion.Version.Build >= 17655;
+
+            if (!supportsDarkMode)
+            {
+                // Disable Theme Settings
+                label1.Enabled = false;
+                comboBox1.Enabled = false;
+
+                // Show Tooltips
+                ToolTip tip = new ToolTip();
+                tip.SetToolTip(comboBox1, "Changing this setting requires Windows 10 1809 or later.");
+            }
         }
 
         private void SearchEngine()
