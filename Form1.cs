@@ -31,12 +31,6 @@ namespace YuuyaPad
 
         public FindDialog sf = null;
 
-        private MenuItem menuEncodingUtf8;
-        private MenuItem menuEncodingUtf8Bom;
-        private MenuItem menuEncodingSjis;
-        private MenuItem menuEncodingEucJp;
-        private MenuItem menuEncodingUnicode;
-
         private Font currentFont;
 
         private float zoomFactor = 1.0f; // Current zoom factor
