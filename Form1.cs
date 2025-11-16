@@ -40,6 +40,8 @@ namespace YuuyaPad
         private string currentFilePath = null;
         private bool isModified = false;
 
+        private ContextMenu rtbContextMenu;
+
         private Encoding currentEncoding = new UTF8Encoding(false);
 
         // RichTextBox printing support class
@@ -406,6 +408,9 @@ namespace YuuyaPad
             // Use system UI font
             richTextBox1.LanguageOption = RichTextBoxLanguageOptions.UIFonts;
 
+            // Enable Context Menu
+            InitializeRichTextBoxContextMenu();
+
             // Load font settings as the top priority
             Font loadedFont = AppSettings.GetFont();
             richTextBox1.Font = loadedFont;
@@ -730,6 +735,17 @@ namespace YuuyaPad
             }
         }
 
+        private void RichTextBox1_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                contextMenu1.MenuItems[0].Enabled = richTextBox1.SelectionLength > 0;        // 切り取り
+                contextMenu1.MenuItems[1].Enabled = richTextBox1.SelectionLength > 0;        // コピー
+                contextMenu1.MenuItems[2].Enabled = Clipboard.ContainsText();                // 貼り付け
+                contextMenu1.MenuItems[4].Enabled = richTextBox1.TextLength > 0;             // 全選択
+            }
+        }
+
         private void UpdateSearchMenuText()
         {
             AppSettings.Load();
@@ -906,6 +922,39 @@ namespace YuuyaPad
 
             else if (item == menuItem54)
                 currentEncoding = Encoding.Unicode; // Unicode
+        }
+
+        private void InitializeRichTextBoxContextMenu()
+        {
+            rtbContextMenu = new ContextMenu();
+
+            // Create Menu
+            MenuItem cut = new MenuItem("&Cut", (s, e) => richTextBox1.Cut());
+            MenuItem copy = new MenuItem("C&opy", (s, e) => richTextBox1.Copy());
+            MenuItem paste = new MenuItem("&Paste", (s, e) => richTextBox1.Paste());
+            MenuItem selectAll = new MenuItem("&Select All", (s, e) => richTextBox1.SelectAll());
+
+            // Add to right-click menu
+            rtbContextMenu.MenuItems.Add(cut);
+            rtbContextMenu.MenuItems.Add(copy);
+            rtbContextMenu.MenuItems.Add(paste);
+            rtbContextMenu.MenuItems.Add("-");
+            rtbContextMenu.MenuItems.Add(selectAll);
+
+            // Assign a context menu
+            richTextBox1.ContextMenu = rtbContextMenu;
+
+            // Update Status
+            richTextBox1.MouseDown += (s, e) =>
+            {
+                if (e.Button == MouseButtons.Right)
+                {
+                    cut.Enabled = richTextBox1.SelectionLength > 0;
+                    copy.Enabled = richTextBox1.SelectionLength > 0;
+                    paste.Enabled = Clipboard.ContainsText();
+                    selectAll.Enabled = richTextBox1.TextLength > 0;
+                }
+            };
         }
 
         private void Placeholder()
