@@ -300,6 +300,7 @@ namespace YuuyaPad
 
             using (var ofd = new OpenFileDialog())
             {
+                ofd.Title = "Open";
                 ofd.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*";
 
                 if (ofd.ShowDialog() == DialogResult.OK)
@@ -819,17 +820,6 @@ namespace YuuyaPad
             }
         }
 
-        // Show the file you are working on in the title bar
-        private void UpdateTitle()
-        {
-            isInternalUpdate = true;
-
-            string name = currentFilePath == null ? "Untitled" : Path.GetFileName(currentFilePath);
-            this.Text = name + (isModified ? "*" : "") + " - YuuyaPad";
-
-            isInternalUpdate = false;
-        }
-
         private bool SaveFileAs()
         {
             using (SaveFileDialog sfd = new SaveFileDialog())
@@ -847,6 +837,17 @@ namespace YuuyaPad
             return false;
         }
 
+        // Show the file you are working on in the title bar
+        private void UpdateTitle()
+        {
+            isInternalUpdate = true;
+
+            string name = currentFilePath == null ? "Untitled" : Path.GetFileName(currentFilePath);
+            this.Text = name + (isModified ? "*" : "") + " - YuuyaPad";
+
+            isInternalUpdate = false;
+        }
+
         private void LoadFileToEditor(string path)
         {
             suppressTextChanged = true;
@@ -860,31 +861,6 @@ namespace YuuyaPad
             suppressTextChanged = false;
 
             UpdateTitle();
-        }
-
-        private Encoding DetectEncoding(string path)
-        {
-            byte[] bom = new byte[4];
-
-            using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
-            {
-                fs.Read(bom, 0, 4);
-            }
-
-            // UTF-8 BOM
-            if (bom[0] == 0xEF && bom[1] == 0xBB && bom[2] == 0xBF)
-                return Encoding.UTF8;
-
-            // UTF-16 LE
-            if (bom[0] == 0xFF && bom[1] == 0xFE)
-                return Encoding.Unicode;
-
-            // UTF-16 BE
-            if (bom[0] == 0xFE && bom[1] == 0xFF)
-                return Encoding.BigEndianUnicode;
-
-            // If unable to determine, default to Shift-JIS
-            return Encoding.GetEncoding("Shift_JIS");
         }
 
         private bool CheckUnsavedChanges()
