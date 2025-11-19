@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Printing;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
@@ -824,17 +825,45 @@ namespace YuuyaPad
         {
             using (SaveFileDialog sfd = new SaveFileDialog())
             {
-                sfd.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*";
-                sfd.FileName = currentFilePath == null
-                    ? "Untitled.txt"
-                    : Path.GetFileName(currentFilePath);
+                sfd.Title = "Save As";
+                sfd.Filter = "Text File (*.txt)|*.txt|All Files (*.*)|*.*";
 
+                // Prohibited characters
+                char[] invalidChars = Path.GetInvalidFileNameChars();
+
+                // Default File Name
+                if (string.IsNullOrEmpty(currentFilePath))
+                {
+                    string rawName = "";
+
+                    if (richTextBox1.TextLength > 0)
+                        rawName = richTextBox1.Text.Substring(0, Math.Min(10, richTextBox1.Text.Length));
+                    else
+                        rawName = "Untitled";
+
+                    // Exclude prohibited characters
+                    string safeName = string.Concat(rawName.Where(c => !invalidChars.Contains(c)));
+
+                    // Fallback in case it becomes empty
+                    if (string.IsNullOrWhiteSpace(safeName))
+                        safeName = "Untitled";
+
+                    sfd.FileName = safeName + ".txt";
+                }
+                else
+                {
+                    sfd.FileName = Path.GetFileName(currentFilePath);
+                }
+
+                // Save
                 if (sfd.ShowDialog() == DialogResult.OK)
                 {
-                    return SaveFile(sfd.FileName);
+                    currentFilePath = sfd.FileName;
+                    return SaveFile(currentFilePath);
                 }
+
+                return false;
             }
-            return false;
         }
 
         // Show the file you are working on in the title bar
