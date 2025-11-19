@@ -23,7 +23,7 @@ body:
   - type: textarea
     id: what_happened
     attributes:
-      label: What happened?
+      label: The issue that occurred
       description: Please describe the bug as specifically as possible.
       placeholder: Please be as specific as possible about what kind of bug you are experiencing
     validations:
