@@ -42,6 +42,8 @@ namespace YuuyaPad
 
         private Encoding currentEncoding = new UTF8Encoding(false);
 
+        private bool suppressTextChanged = false;
+
         // RichTextBox printing support class
         public class RichTextBoxPrinter
         {
@@ -227,17 +229,17 @@ namespace YuuyaPad
 
         private void richTextBox1_TextChanged(object sender, EventArgs e)
         {
-            if (isInternalUpdate)
-                return;
+            if (!suppressTextChanged)
+            {
+                isModified = true;
+                UpdateTitle();
 
-            isModified = true;
-            UpdateTitle();
+                // Update Edit menu state
+                UpdateMenuState();
 
-            // Update Edit menu state
-            UpdateMenuState();
-
-            // Update Status Bar
-            UpdateStatusBar();
+                // Update Status Bar
+                UpdateStatusBar();
+            }
         }
 
         private void menuItem7_Click(object sender, EventArgs e)
@@ -441,6 +443,8 @@ namespace YuuyaPad
             // Register shortcut keys for zoom
             this.KeyPreview = true;
             this.KeyDown += Form1_KeyDown;
+
+            richTextBox1.TextChanged += richTextBox1_TextChanged;
 
             // Set default encoding to UTF-8 (Without BOM)
             menuItem50.Checked = true;
@@ -780,58 +784,37 @@ namespace YuuyaPad
 
         private void NewFile()
         {
-            if (!CheckUnsavedChanges())
-                return;
+            suppressTextChanged = true;
 
-            isLoading = true;
             richTextBox1.Clear();
-            isLoading = false;
-
-            lastTextSnapshot = "";
-
             currentFilePath = null;
             isModified = false;
 
             UpdateTitle();
-        }
 
-        private bool OpenFile(string path)
-        {
-            try
-            {
-                currentEncoding = DetectEncoding(path);
-
-                isLoading = true;
-                richTextBox1.Text = File.ReadAllText(path, currentEncoding);
-                isLoading = false;
-
-                currentFilePath = path;
-                isModified = false;
-                return true;
-            }
-            catch (Exception ex)
-            {
-                isLoading = false;
-                MessageBox.Show($"File open error:\n{ex.Message}");
-                return false;
-            }
+            suppressTextChanged = false;
         }
 
         private bool SaveFile(string path)
         {
             try
             {
-                File.WriteAllText(path, richTextBox1.Text, Encoding.UTF8);
+                File.WriteAllText(path, richTextBox1.Text);
+
+                suppressTextChanged = true;
 
                 currentFilePath = path;
-
                 isModified = false;
+
                 UpdateTitle();
+
+                suppressTextChanged = false;
+
                 return true;
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Error");
                 return false;
             }
         }
@@ -864,28 +847,17 @@ namespace YuuyaPad
             return false;
         }
 
-        private string GenerateSafeFilename()
-        {
-            string raw = richTextBox1.Text.Length > 0
-                         ? richTextBox1.Text.Substring(0, Math.Min(10, richTextBox1.Text.Length))
-                         : "Untitled";
-
-            foreach (char c in Path.GetInvalidFileNameChars())
-                raw = raw.Replace(c.ToString(), "_");
-
-            return raw + ".txt";
-        }
-
         private void LoadFileToEditor(string path)
         {
-            isLoading = true;
+            suppressTextChanged = true;
 
-            richTextBox1.Text = File.ReadAllText(path);
+            string content = File.ReadAllText(path);
+            richTextBox1.Text = content;
 
             currentFilePath = path;
             isModified = false;
 
-            isLoading = false;
+            suppressTextChanged = false;
 
             UpdateTitle();
         }
@@ -925,7 +897,7 @@ namespace YuuyaPad
 
             DialogResult result = MessageBox.Show(
                 $"{filename} has been modified and not yet saved.\nDo you want to save your changes?",
-                "Confirm",
+                "YuuyaPad",
                 MessageBoxButtons.YesNoCancel,
                 MessageBoxIcon.Warning
             );
