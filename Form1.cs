@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Printing;
 using System.IO;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
@@ -20,12 +19,6 @@ namespace YuuyaPad
             DebugMenu();
             EnableDragAndDrop();
 
-            richTextBox1.TextChanged += (s, e) =>
-            {
-                isModified = true;
-                UpdateTitle();
-            };
-
             UpdateTitle();
         }
 
@@ -39,6 +32,11 @@ namespace YuuyaPad
 
         private string currentFilePath = null;
         private bool isModified = false;
+        private bool isLoading = false;
+
+        private bool isInternalUpdate = false;
+
+        private string lastTextSnapshot = "";
 
         private ContextMenu rtbContextMenu;
 
@@ -173,6 +171,9 @@ namespace YuuyaPad
 
         private void richTextBox1_DragEnter(object sender, DragEventArgs e)
         {
+            richTextBox1.ClearUndo();
+            isModified = false;
+
             // Show copy effect only when file is dropped
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
                 e.Effect = DragDropEffects.Copy;
@@ -182,14 +183,17 @@ namespace YuuyaPad
 
         private void richTextBox1_DragDrop(object sender, DragEventArgs e)
         {
-            // Get the path of the dropped file
-            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-
-            if (files != null && files.Length > 0)
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
-                // Still can't open the file
-                Placeholder();
-                //OpenFile();
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+
+                if (files.Length > 0)
+                {
+                    if (!CheckUnsavedChanges())
+                        return;
+
+                    LoadFileToEditor(files[0]);
+                }
             }
         }
 
@@ -223,6 +227,12 @@ namespace YuuyaPad
 
         private void richTextBox1_TextChanged(object sender, EventArgs e)
         {
+            if (isInternalUpdate)
+                return;
+
+            isModified = true;
+            UpdateTitle();
+
             // Update Edit menu state
             UpdateMenuState();
 
@@ -269,32 +279,30 @@ namespace YuuyaPad
         private void menuItem8_Click(object sender, EventArgs e)
         {
             // New
-            if (!CheckSaveBeforeClose())
-                return; // If cancelled
+            if (!CheckUnsavedChanges())
+                return;
 
-            // Initialize a new document
-            currentFilePath = null;
             richTextBox1.Clear();
             currentFilePath = null;
             isModified = false;
             UpdateTitle();
+
+            NewFile();
         }
 
         private void menuItem9_Click(object sender, EventArgs e)
         {
             // Open
-            using (OpenFileDialog ofd = new OpenFileDialog())
-            {
-                currentFilePath = ofd.FileName;
+            if (!CheckUnsavedChanges())
+                return;
 
+            using (var ofd = new OpenFileDialog())
+            {
                 ofd.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*";
-                ofd.Title = "Open";
 
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
-                    // I still can't open the file
-                    Placeholder();
-                    //OpenFile();
+                    LoadFileToEditor(ofd.FileName);
                 }
             }
         }
@@ -441,13 +449,15 @@ namespace YuuyaPad
             // Set the initial zoom factor
             richTextBox1.ZoomFactor = zoomFactor;
 
-            // Prevent font from resetting after full delete
+            richTextBox1.KeyPress += (s, ev) =>
+            {
+                isModified = true;
+            };
+
             richTextBox1.TextChanged += (s, ev) =>
             {
-                if (richTextBox1.TextLength == 0 && richTextBox1.Font != currentFont)
-                {
-                    richTextBox1.Font = currentFont;
-                }
+                if (richTextBox1.Focused)
+                    isModified = true;
             };
         }
 
@@ -729,7 +739,25 @@ namespace YuuyaPad
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (!CheckSaveBeforeClose())
+            if (!isModified) return;
+
+            var fileName = string.IsNullOrEmpty(currentFilePath) ? "Untitled" : currentFilePath;
+
+            var result = MessageBox.Show(
+                $"{fileName} has been modified and not yet saved.\nDo you want to save your changes?",
+                "YuuyaPad",
+                MessageBoxButtons.YesNoCancel,
+                MessageBoxIcon.Warning
+            );
+
+            if (result == DialogResult.Yes)
+            {
+                if (!SaveFileAs())
+                {
+                    e.Cancel = true;
+                }
+            }
+            else if (result == DialogResult.Cancel)
             {
                 e.Cancel = true;
             }
@@ -750,24 +778,60 @@ namespace YuuyaPad
             menuItem33.Text = "&Search " + name;
         }
 
-        private bool SaveFile(string path)
+        private void NewFile()
+        {
+            if (!CheckUnsavedChanges())
+                return;
+
+            isLoading = true;
+            richTextBox1.Clear();
+            isLoading = false;
+
+            lastTextSnapshot = "";
+
+            currentFilePath = null;
+            isModified = false;
+
+            UpdateTitle();
+        }
+
+        private bool OpenFile(string path)
         {
             try
             {
-                Placeholder();  // Save processing is not yet implemented
+                currentEncoding = DetectEncoding(path);
 
+                isLoading = true;
+                richTextBox1.Text = File.ReadAllText(path, currentEncoding);
+                isLoading = false;
+
+                currentFilePath = path;
                 isModified = false;
                 return true;
             }
             catch (Exception ex)
             {
-                MessageBox.Show(
-                    $"An error occurred while saving:\n{ex.Message}",
-                    "Error",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error
-                );
+                isLoading = false;
+                MessageBox.Show($"File open error:\n{ex.Message}");
+                return false;
+            }
+        }
 
+        private bool SaveFile(string path)
+        {
+            try
+            {
+                File.WriteAllText(path, richTextBox1.Text, Encoding.UTF8);
+
+                currentFilePath = path;
+
+                isModified = false;
+                UpdateTitle();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
         }
@@ -775,100 +839,104 @@ namespace YuuyaPad
         // Show the file you are working on in the title bar
         private void UpdateTitle()
         {
-            string fileName = string.IsNullOrEmpty(currentFilePath)
-                ? "Untitled"
-                : Path.GetFileName(currentFilePath);
+            isInternalUpdate = true;
 
-            string modifiedMark = isModified ? "*" : "";
+            string name = currentFilePath == null ? "Untitled" : Path.GetFileName(currentFilePath);
+            this.Text = name + (isModified ? "*" : "") + " - YuuyaPad";
 
-            this.Text = $"{fileName}{modifiedMark} - YuuyaPad";
+            isInternalUpdate = false;
         }
 
-        // Save As function
         private bool SaveFileAs()
         {
             using (SaveFileDialog sfd = new SaveFileDialog())
             {
-                sfd.Title = "Save As";
-                sfd.Filter = "Text File (*.txt)|*.txt|All Files (*.*)|*.*";
-
-                // Replace invalid characters in file names
-                string SanitizeFileName(string name)
-                {
-                    char[] invalid = Path.GetInvalidFileNameChars();
-                    foreach (char c in invalid)
-                    {
-                        name = name.Replace(c.ToString(), "");
-                    }
-                    return name;
-                }
-
-                string suggestedName;
-
-                if (string.IsNullOrEmpty(currentFilePath))
-                {
-                    if (richTextBox1.TextLength > 0)
-                    {
-                        suggestedName = richTextBox1.Text.Substring(0, Math.Min(10, richTextBox1.Text.Length));
-                        suggestedName = SanitizeFileName(suggestedName);
-
-                        if (string.IsNullOrWhiteSpace(suggestedName))
-                            suggestedName = "Untitled";
-                    }
-                    else
-                    {
-                        suggestedName = "Untitled";
-                    }
-
-                    sfd.FileName = suggestedName + ".txt";
-                }
-                else
-                {
-                    sfd.FileName = SanitizeFileName(Path.GetFileName(currentFilePath));
-                }
+                sfd.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*";
+                sfd.FileName = currentFilePath == null
+                    ? "Untitled.txt"
+                    : Path.GetFileName(currentFilePath);
 
                 if (sfd.ShowDialog() == DialogResult.OK)
                 {
-                    currentFilePath = sfd.FileName;
-                    return SaveFile(currentFilePath);
+                    return SaveFile(sfd.FileName);
                 }
-
-                return false;
             }
+            return false;
         }
 
-        private bool CheckSaveBeforeClose()
+        private string GenerateSafeFilename()
         {
-            if (!isModified)
-                return true;
+            string raw = richTextBox1.Text.Length > 0
+                         ? richTextBox1.Text.Substring(0, Math.Min(10, richTextBox1.Text.Length))
+                         : "Untitled";
 
-            string docName = string.IsNullOrEmpty(currentFilePath)
-                ? "Untitled"
-                : currentFilePath;
+            foreach (char c in Path.GetInvalidFileNameChars())
+                raw = raw.Replace(c.ToString(), "_");
 
-            // Save confirmation message
-            var result = MessageBox.Show(
-                $"{docName} has been modified and not yet saved.\nDo you want to save your changes?",
-                "YuuyaPad",
+            return raw + ".txt";
+        }
+
+        private void LoadFileToEditor(string path)
+        {
+            isLoading = true;
+
+            richTextBox1.Text = File.ReadAllText(path);
+
+            currentFilePath = path;
+            isModified = false;
+
+            isLoading = false;
+
+            UpdateTitle();
+        }
+
+        private Encoding DetectEncoding(string path)
+        {
+            byte[] bom = new byte[4];
+
+            using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
+            {
+                fs.Read(bom, 0, 4);
+            }
+
+            // UTF-8 BOM
+            if (bom[0] == 0xEF && bom[1] == 0xBB && bom[2] == 0xBF)
+                return Encoding.UTF8;
+
+            // UTF-16 LE
+            if (bom[0] == 0xFF && bom[1] == 0xFE)
+                return Encoding.Unicode;
+
+            // UTF-16 BE
+            if (bom[0] == 0xFE && bom[1] == 0xFF)
+                return Encoding.BigEndianUnicode;
+
+            // If unable to determine, default to Shift-JIS
+            return Encoding.GetEncoding("Shift_JIS");
+        }
+
+        private bool CheckUnsavedChanges()
+        {
+            if (!isModified) return true;
+
+            string filename = string.IsNullOrEmpty(currentFilePath)
+                                ? "Untitled"
+                                : currentFilePath;
+
+            DialogResult result = MessageBox.Show(
+                $"{filename} has been modified and not yet saved.\nDo you want to save your changes?",
+                "Confirm",
                 MessageBoxButtons.YesNoCancel,
                 MessageBoxIcon.Warning
             );
 
-            switch (result)
-            {
-                case DialogResult.Yes:
-                    if (string.IsNullOrEmpty(currentFilePath))
-                        return SaveFileAs(); // New file
-                    else
-                        return SaveFile(currentFilePath); // Save
+            if (result == DialogResult.Yes)
+                return SaveFile(currentFilePath); // Save and Continue
 
-                case DialogResult.No:
-                    return true; // Close without saving
+            if (result == DialogResult.No)
+                return true;       // Continue without Saving
 
-                case DialogResult.Cancel:
-                default:
-                    return false; // Cancel
-            }
+            return false;          // Cancel
         }
 
         private void InitializeEncodingMenu()
