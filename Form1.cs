@@ -275,6 +275,7 @@ namespace YuuyaPad
         private void menuItem15_Click(object sender, EventArgs e)
         {
             // Exit Application
+            SaveWindowsSize();
             this.Close();
             Application.Exit();
         }
@@ -437,6 +438,9 @@ namespace YuuyaPad
             // Get search engine settings
             GetSearchEngine();
             UpdateSearchMenuText();
+
+            // Restore Window Size
+            LoadWindowSize();
 
             // Show status bar by default
             statusBar1.Visible = AppSettings.ShowStatusBar;
@@ -759,6 +763,8 @@ namespace YuuyaPad
 
             if (result == DialogResult.Yes)
             {
+                SaveWindowsSize();
+
                 if (!SaveFileAs())
                 {
                     e.Cancel = true;
@@ -990,6 +996,39 @@ namespace YuuyaPad
                     selectAll.Enabled = richTextBox1.TextLength > 0;
                 }
             };
+        }
+
+        private void LoadWindowSize()
+        {
+            AppSettings.Load();
+
+            if (AppSettings.KeepWindowSize == 1)
+            {
+                this.StartPosition = FormStartPosition.Manual;
+                this.Location = new Point(AppSettings.WindowX, AppSettings.WindowY);
+                this.Size = new Size(AppSettings.WindowWidth, AppSettings.WindowHeight);
+
+                if (AppSettings.WindowMaximized)
+                    this.WindowState = FormWindowState.Maximized;
+            }
+        }
+
+        private void SaveWindowsSize()
+        {
+            if (AppSettings.KeepWindowSize == 1)
+            {
+                AppSettings.WindowMaximized = (this.WindowState == FormWindowState.Maximized);
+
+                if (!AppSettings.WindowMaximized)
+                {
+                    AppSettings.WindowX = this.Location.X;
+                    AppSettings.WindowY = this.Location.Y;
+                    AppSettings.WindowWidth = this.Size.Width;
+                    AppSettings.WindowHeight = this.Size.Height;
+                }
+            }
+
+            AppSettings.Save();
         }
 
         private void Placeholder()

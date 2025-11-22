@@ -74,7 +74,11 @@ namespace YuuyaPad
 
         public void InitSettings(string currentSearchEngine = "Google")
         {
+            // Load Settings
             AppSettings.Load();
+
+            // Check Remember window size Settings
+            checkBox1.Checked = (AppSettings.KeepWindowSize == 1);
 
             // Disable dark mode if you are not Windows 10 1809 or later
             DisableDarkModeControlsIfNotSupported();
@@ -108,6 +112,9 @@ namespace YuuyaPad
         private void SaveSettings()
         {
             SearchEngine();
+            AppSettings.KeepWindowSize = checkBox1.Checked ? 1 : 0;
+
+            AppSettings.Save();
         }
 
         private void DisableDarkModeControlsIfNotSupported()
@@ -145,7 +152,6 @@ namespace YuuyaPad
                 AppSettings.SearchEngine = "Custom";
 
             AppSettings.CustomSearchUrl = textBox1.Text.Trim();
-            AppSettings.Save();
         }
 
         private void radioButton5_CheckedChanged(object sender, EventArgs e)

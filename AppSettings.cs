@@ -14,6 +14,15 @@ public static class AppSettings
     public static FontStyle FontStyle { get; set; } = SystemFonts.DefaultFont.Style;
     public static bool ShowStatusBar { get; set; } = true;
 
+    public static int KeepWindowSize { get; set; } = 0;
+
+    public static int WindowX { get; set; } = 100;
+    public static int WindowY { get; set; } = 100;
+    public static int WindowWidth { get; set; } = 800;
+    public static int WindowHeight { get; set; } = 600;
+    public static bool WindowMaximized { get; set; } = false;
+
+
     public static void Save()
     {
         try
@@ -26,6 +35,9 @@ public static class AppSettings
                 key.SetValue("FontSize", FontSize);
                 key.SetValue("FontStyle", (int)FontStyle);
                 key.SetValue("ShowStatusBar", ShowStatusBar ? 1 : 0, RegistryValueKind.DWord);
+
+                key.SetValue("KeepWindowSize", KeepWindowSize, RegistryValueKind.DWord);
+
             }
         }
         catch
@@ -33,6 +45,7 @@ public static class AppSettings
             // Ignore or log
         }
     }
+
 
     public static void Load()
     {
@@ -48,6 +61,8 @@ public static class AppSettings
                     FontSize = Convert.ToSingle(key.GetValue("FontSize", SystemFonts.DefaultFont.Size));
                     FontStyle = (FontStyle)Convert.ToInt32(key.GetValue("FontStyle", (int)SystemFonts.DefaultFont.Style));
                     ShowStatusBar = Convert.ToInt32(key.GetValue("ShowStatusBar", 1)) != 0;
+
+                    KeepWindowSize = Convert.ToInt32(key.GetValue("KeepWindowSize", 0));
                 }
             }
         }
@@ -56,6 +71,7 @@ public static class AppSettings
             // Use defaults if loading fails
         }
     }
+
 
     public static Font GetFont()
     {
@@ -68,6 +84,7 @@ public static class AppSettings
             return SystemFonts.DefaultFont;
         }
     }
+
 
     public static void SetFont(Font font)
     {
