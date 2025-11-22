@@ -6,8 +6,8 @@ YuuyaPad is a completely free, open-source notepad written in C# that aims to be
 # Future goals
 YuuyaPad aims to add all of the following features.<br>
 The higher the feature in the list below, the higher the priority and the shorter the time until implementation.
-- [ ] Finalize the menu bar
-- [ ] Save feature
+- [X] Finalize the menu bar
+- [X] Save feature
 - [ ] Multilingual support
 - [ ] Dark mode support
 - [ ] Tab features
