@@ -628,6 +628,7 @@ namespace YuuyaPad
         {
             // Update Edit menu state on selection change
             UpdateMenuState();
+            UpdateStatusBar();
 
             // Update Search menu item state
             menuItem33.Enabled = !string.IsNullOrWhiteSpace(richTextBox1.SelectedText);
