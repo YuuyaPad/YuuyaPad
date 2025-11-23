@@ -450,6 +450,8 @@ namespace YuuyaPad
             this.KeyPreview = true;
             this.KeyDown += Form1_KeyDown;
 
+            this.FormClosed += Form1_FormClosed;
+
             richTextBox1.TextChanged += richTextBox1_TextChanged;
 
             // Set default encoding to UTF-8 (Without BOM)
@@ -998,12 +1000,19 @@ namespace YuuyaPad
             };
         }
 
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            SaveWindowsSize();
+        }
+
         private void LoadWindowSize()
         {
             AppSettings.Load();
 
             if (AppSettings.KeepWindowSize == 1)
             {
+                AppSettings.LoadWindowSize();
+
                 this.StartPosition = FormStartPosition.Manual;
                 this.Location = new Point(AppSettings.WindowX, AppSettings.WindowY);
                 this.Size = new Size(AppSettings.WindowWidth, AppSettings.WindowHeight);
@@ -1017,18 +1026,21 @@ namespace YuuyaPad
         {
             if (AppSettings.KeepWindowSize == 1)
             {
-                AppSettings.WindowMaximized = (this.WindowState == FormWindowState.Maximized);
-
-                if (!AppSettings.WindowMaximized)
+                if (this.WindowState == FormWindowState.Normal)
                 {
                     AppSettings.WindowX = this.Location.X;
                     AppSettings.WindowY = this.Location.Y;
                     AppSettings.WindowWidth = this.Size.Width;
                     AppSettings.WindowHeight = this.Size.Height;
+                    AppSettings.WindowMaximized = false;
                 }
-            }
+                else if (this.WindowState == FormWindowState.Maximized)
+                {
+                    AppSettings.WindowMaximized = true;
+                }
 
-            AppSettings.Save();
+                AppSettings.SaveWindowSize();
+            }
         }
 
         private void Placeholder()

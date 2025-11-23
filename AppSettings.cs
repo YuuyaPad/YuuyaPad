@@ -5,7 +5,8 @@ using System.Drawing;
 public static class AppSettings
 {
     // Saved in HKCU\Software\Yuuya\YuuyaPad
-    private const string RegistryPath = @"Software\Yuuya\YuuyaPad";
+    private const string MainKey = @"Software\Yuuya\YuuyaPad";
+    private const string WindowStateKey = @"Software\Yuuya\YuuyaPad\WindowState";
 
     public static string SearchEngine { get; set; } = "Google";
     public static string CustomSearchUrl { get; set; } = "";
@@ -22,12 +23,11 @@ public static class AppSettings
     public static int WindowHeight { get; set; } = 600;
     public static bool WindowMaximized { get; set; } = false;
 
-
     public static void Save()
     {
         try
         {
-            using (RegistryKey key = Registry.CurrentUser.CreateSubKey(RegistryPath))
+            using (RegistryKey key = Registry.CurrentUser.CreateSubKey(MainKey))
             {
                 key.SetValue("SearchEngine", SearchEngine);
                 key.SetValue("CustomSearchUrl", CustomSearchUrl);
@@ -37,7 +37,6 @@ public static class AppSettings
                 key.SetValue("ShowStatusBar", ShowStatusBar ? 1 : 0, RegistryValueKind.DWord);
 
                 key.SetValue("KeepWindowSize", KeepWindowSize, RegistryValueKind.DWord);
-
             }
         }
         catch
@@ -46,12 +45,11 @@ public static class AppSettings
         }
     }
 
-
     public static void Load()
     {
         try
         {
-            using (RegistryKey key = Registry.CurrentUser.OpenSubKey(RegistryPath))
+            using (RegistryKey key = Registry.CurrentUser.OpenSubKey(MainKey))
             {
                 if (key != null)
                 {
@@ -68,10 +66,9 @@ public static class AppSettings
         }
         catch
         {
-            // Use defaults if loading fails
+            // Use defaults
         }
     }
-
 
     public static Font GetFont()
     {
@@ -85,12 +82,52 @@ public static class AppSettings
         }
     }
 
-
     public static void SetFont(Font font)
     {
         FontName = font.Name;
         FontSize = font.Size;
         FontStyle = font.Style;
         Save();
+    }
+
+    public static void SaveWindowSize()
+    {
+        if (KeepWindowSize != 1) return;
+
+        try
+        {
+            using (RegistryKey key = Registry.CurrentUser.CreateSubKey(WindowStateKey))
+            {
+                key.SetValue("WindowX", WindowX, RegistryValueKind.DWord);
+                key.SetValue("WindowY", WindowY, RegistryValueKind.DWord);
+                key.SetValue("WindowWidth", WindowWidth, RegistryValueKind.DWord);
+                key.SetValue("WindowHeight", WindowHeight, RegistryValueKind.DWord);
+                key.SetValue("WindowMaximized", WindowMaximized ? 1 : 0, RegistryValueKind.DWord);
+            }
+        }
+        catch { }
+    }
+
+    public static void LoadWindowSize()
+    {
+        if (KeepWindowSize != 1) return;
+
+        try
+        {
+            using (RegistryKey key = Registry.CurrentUser.OpenSubKey(WindowStateKey))
+            {
+                if (key == null) return;
+
+                WindowX = Convert.ToInt32(key.GetValue("WindowX", WindowX));
+                WindowY = Convert.ToInt32(key.GetValue("WindowY", WindowY));
+                WindowWidth = Convert.ToInt32(key.GetValue("WindowWidth", WindowWidth));
+                WindowHeight = Convert.ToInt32(key.GetValue("WindowHeight", WindowHeight));
+                WindowMaximized = Convert.ToInt32(key.GetValue("WindowMaximized", 0)) == 1;
+            }
+        }
+        catch
+        {
+
+        }
     }
 }
