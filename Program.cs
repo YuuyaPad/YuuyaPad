@@ -94,12 +94,6 @@ namespace YuuyaPad
             // Open New Form1
             public void OpenForm1(Form1 form)
             {
-                // This contains code that is for debugging purposes only.
-#if DEBUG
-                form.Text += " (Debug)";
-#endif
-                // End of Debug code
-
                 form.FormClosed += Form_FormClosed;
                 form.Show();
             }

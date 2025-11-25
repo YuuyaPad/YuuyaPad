@@ -18,10 +18,10 @@ namespace YuuyaPad
             InitializeComponent();
 
             UpdateStatusBar();
-            DebugMenu();
+            UpdateTitle();
             EnableDragAndDrop();
 
-            UpdateTitle();
+            DebugMenu();
         }
 
         public FindDialog sf = null;
@@ -885,7 +885,12 @@ namespace YuuyaPad
             isInternalUpdate = true;
 
             string name = currentFilePath == null ? "Untitled" : Path.GetFileName(currentFilePath);
-            this.Text = name + (isModified ? "*" : "") + " - YuuyaPad";
+
+#if DEBUG
+            this.Text = name + (isModified ? "*" : "") + " - YuuyaPad [Debug]" ;
+#else
+this.Text = name + (isModified ? "*" : "") + " - YuuyaPad" ;
+#endif
 
             isInternalUpdate = false;
         }
@@ -1116,7 +1121,7 @@ namespace YuuyaPad
         }
 
         /// <summary>
-        /// DEBUG FEATURES
+        /// Debug Features
         /// </summary>
         /// <usage>This contains code that is for debugging purposes only.</usage>
         /// <desc>This code will only run in the "Debug" configuration, not in the "Release" configuration.</desc>
