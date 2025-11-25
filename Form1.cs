@@ -5,6 +5,7 @@ using System.Drawing.Printing;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Security.Principal;
 using System.Text;
 using System.Windows.Forms;
 
@@ -417,6 +418,9 @@ namespace YuuyaPad
         {
             // Load saved settings
             AppSettings.Load();
+
+            // Check if you are running as administrator
+            GetRunAdmin();
 
             // Use system UI font
             richTextBox1.LanguageOption = RichTextBoxLanguageOptions.UIFonts;
@@ -1043,6 +1047,17 @@ namespace YuuyaPad
             }
         }
 
+        private void GetRunAdmin()
+        {
+            if (CheckAdmin.IsRunAsAdmin())
+            {
+                if (!this.Text.EndsWith(" [Admin]"))
+                {
+                    this.Text += " [Admin]";
+                }
+            }
+        }
+
         private void Placeholder()
         {
             // Displayed when trying to access a feature under construction
@@ -1050,6 +1065,22 @@ namespace YuuyaPad
                 "YuuyaPad",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.None);
+        }
+
+        public static bool IsRunAsAdmin()
+        {
+            try
+            {
+                using (WindowsIdentity id = WindowsIdentity.GetCurrent())
+                {
+                    var principal = new WindowsPrincipal(id);
+                    return principal.IsInRole(WindowsBuiltInRole.Administrator);
+                }
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
