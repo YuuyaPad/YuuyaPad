@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Drawing.Printing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.Text;
@@ -454,8 +455,10 @@ namespace YuuyaPad
             this.KeyPreview = true;
             this.KeyDown += Form1_KeyDown;
 
+            // Register the FormClosed event
             this.FormClosed += Form1_FormClosed;
 
+            // Register the TextChanged event
             richTextBox1.TextChanged += richTextBox1_TextChanged;
 
             // Set default encoding to UTF-8 (Without BOM)
@@ -541,7 +544,7 @@ namespace YuuyaPad
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Could not open browser.\n\n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Could not open browser.\n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -667,7 +670,7 @@ namespace YuuyaPad
         {
             // Find Next
             Placeholder();
-            // FindNext();
+            //FindNext();
         }
 
         private void menuItem43_Click(object sender, EventArgs e)
@@ -676,6 +679,7 @@ namespace YuuyaPad
             menuItem43.Checked = !menuItem43.Checked;
             statusBar1.Visible = menuItem43.Checked;
 
+            //Reflect the display of the status bar in settings
             AppSettings.ShowStatusBar = menuItem43.Checked;
             AppSettings.Save();
         }
@@ -758,8 +762,10 @@ namespace YuuyaPad
         {
             if (!isModified) return;
 
+            // If not saved to a file, it will be "Untitled"
             var fileName = string.IsNullOrEmpty(currentFilePath) ? "Untitled" : currentFilePath;
 
+            // Save confirmation message
             var result = MessageBox.Show(
                 $"{fileName} has been modified and not yet saved.\nDo you want to save your changes?",
                 "YuuyaPad",
@@ -769,6 +775,7 @@ namespace YuuyaPad
 
             if (result == DialogResult.Yes)
             {
+                // Remember window size and settings in settings
                 SaveWindowsSize();
 
                 if (!SaveFileAs())
@@ -778,7 +785,7 @@ namespace YuuyaPad
             }
             else if (result == DialogResult.Cancel)
             {
-                e.Cancel = true;
+                e.Cancel = true; // Do not close if cancel is pressed
             }
         }
 
@@ -849,6 +856,7 @@ namespace YuuyaPad
                 {
                     string rawName = "";
 
+                    // The first 10 characters of the file name are automatically determined
                     if (richTextBox1.TextLength > 0)
                         rawName = richTextBox1.Text.Substring(0, Math.Min(10, richTextBox1.Text.Length));
                     else
