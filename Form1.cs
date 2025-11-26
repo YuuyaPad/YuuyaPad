@@ -4,7 +4,6 @@ using System.Drawing;
 using System.Drawing.Printing;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.Text;
@@ -897,7 +896,7 @@ namespace YuuyaPad
 #if DEBUG
             this.Text = name + (isModified ? "*" : "") + " - YuuyaPad [Debug]" ;
 #else
-this.Text = name + (isModified ? "*" : "") + " - YuuyaPad" ;
+            this.Text = name + (isModified ? "*" : "") + " - YuuyaPad";
 #endif
 
             isInternalUpdate = false;
