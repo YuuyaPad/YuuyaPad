@@ -836,7 +836,7 @@ namespace YuuyaPad
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error");
+                MessageBox.Show($"Failed to save file.\n{ex.Message}", "Error");
                 return false;
             }
         }
