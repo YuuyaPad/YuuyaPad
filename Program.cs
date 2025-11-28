@@ -23,14 +23,43 @@ namespace YuuyaPad
             if (current < min)
             {
                 MessageBox.Show(
-                    $"YuuyaPad does not support your operating system. \n" +
-                    $"The current version is {current}, but YuuyaPad requires Windows 7 or later." + Environment.NewLine + "Consider upgrading your version of Windows." + Environment.NewLine + "Click OK to exit the program.",
+                    $"YuuyaPad does not support your operating system.\nThe current version is {current}, but YuuyaPad requires Windows 7 or later.\nConsider upgrading your version of Windows.\nClick OK to exit the program.",
                     "YuuyaPad",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.None
                 );
                 return; // Abort Startup
             }
+
+            // Server Core detection
+            try
+            {
+                using (var key = Microsoft.Win32.Registry.LocalMachine.OpenSubKey(
+                    @"Software\Microsoft\Windows NT\CurrentVersion\Server\ServerLevels"))
+                {
+                    if (key != null)
+                    {
+                        // If "Server Core" exists, its value is 1
+                        object coreValue = key.GetValue("Server-Core-Installation");
+                        if (coreValue != null && Convert.ToInt32(coreValue) == 1)
+                        {
+                            // Immediate termination on Server Core
+                            MessageBox.Show(
+                                "YuuyaPad does not support your operating system.\nRunning YuuyaPad on Server Core is not supported.\nPlease use the graphical shell instead of Windows Server Core.\nClick OK to exit Program",
+                                "YuuyaPad",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.None
+                            );
+                            return;  // Abort startup
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                // If for some reason you are unable to check, it will operate normally.
+            }
+
 
             // Exception handling settings
             Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
