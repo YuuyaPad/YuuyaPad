@@ -34,6 +34,8 @@ namespace YuuyaPad
 
         private string currentSearchEngine = "Google";
 
+        private FindDialog findDialog = null;
+
         private string currentFilePath = null;
         private bool isModified = false;
         private bool isLoading = false;
@@ -681,9 +683,25 @@ namespace YuuyaPad
 
         private void menuItem41_Click(object sender, EventArgs e)
         {
-            // Find
-            FindDialog f = new FindDialog();
-            f.Show(this);
+            // If it's already open, just bring it forward
+            if (findDialog != null && !findDialog.IsDisposed)
+            {
+                findDialog.WindowState = FormWindowState.Normal;
+                findDialog.Activate(); // Bring to front in main form
+                return;
+            }
+
+            // Create New
+            findDialog = new FindDialog
+            {
+                Owner = this,  // Set owner (this will bring it to the forefront in the app)
+                StartPosition = FormStartPosition.CenterParent
+            };
+
+            // Set back to null when closed
+            findDialog.FormClosed += (s, e2) => findDialog = null;
+
+            findDialog.Show(this);
         }
 
         private void FindNext(string searchText)
