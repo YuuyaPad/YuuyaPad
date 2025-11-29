@@ -24,6 +24,8 @@ namespace YuuyaPad
             DebugMenu();
         }
 
+        private const int WM_PASTE = 0x0302;
+
         public FindDialog sf = null;
 
         private Font currentFont;
@@ -45,6 +47,30 @@ namespace YuuyaPad
         private Encoding currentEncoding = new UTF8Encoding(false);
 
         private bool suppressTextChanged = false;
+
+        protected override void WndProc(ref Message m)
+        {
+            if (m.Msg == WM_PASTE)
+            {
+                // Rejects when an image is pasted
+                if (Clipboard.ContainsImage())
+                {
+                    return; // Do not paste
+                }
+
+                // Allow pasting only if it is text
+                if (Clipboard.ContainsText())
+                {
+                    richTextBox1.SelectedText = Clipboard.GetText();
+                    return;
+                }
+
+                // Pasting other than the above is prohibited
+                return;
+            }
+
+            base.WndProc(ref m);
+        }
 
         // RichTextBox printing support class
         public class RichTextBoxPrinter
