@@ -1042,10 +1042,10 @@ namespace YuuyaPad
             rtbContextMenu.MenuItems.Add("-");
             rtbContextMenu.MenuItems.Add(selectAll);
 
-            // Assign a context menu
+            // Assign the context menu to the RichTextBox
             richTextBox1.ContextMenu = rtbContextMenu;
 
-            // Update Status
+            // Update menu enable/disable state on right-click
             richTextBox1.MouseDown += (s, e) =>
             {
                 if (e.Button == MouseButtons.Right)

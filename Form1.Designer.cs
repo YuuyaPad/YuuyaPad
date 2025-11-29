@@ -87,12 +87,6 @@
             this.menuItem7 = new System.Windows.Forms.MenuItem();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.statusBar1 = new System.Windows.Forms.StatusBar();
-            this.contextMenu1 = new System.Windows.Forms.ContextMenu();
-            this.menuItem55 = new System.Windows.Forms.MenuItem();
-            this.menuItem56 = new System.Windows.Forms.MenuItem();
-            this.menuItem57 = new System.Windows.Forms.MenuItem();
-            this.menuItem58 = new System.Windows.Forms.MenuItem();
-            this.menuItem59 = new System.Windows.Forms.MenuItem();
             this.SuspendLayout();
             // 
             // mainMenu1
@@ -506,40 +500,6 @@
             this.statusBar1.TabIndex = 2;
             this.statusBar1.Text = "text";
             // 
-            // contextMenu1
-            // 
-            this.contextMenu1.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-            this.menuItem55,
-            this.menuItem56,
-            this.menuItem57,
-            this.menuItem58,
-            this.menuItem59});
-            // 
-            // menuItem55
-            // 
-            this.menuItem55.Index = 0;
-            this.menuItem55.Text = "&Cut";
-            // 
-            // menuItem56
-            // 
-            this.menuItem56.Index = 1;
-            this.menuItem56.Text = "C&opy";
-            // 
-            // menuItem57
-            // 
-            this.menuItem57.Index = 2;
-            this.menuItem57.Text = "&Paste";
-            // 
-            // menuItem58
-            // 
-            this.menuItem58.Index = 3;
-            this.menuItem58.Text = "-";
-            // 
-            // menuItem59
-            // 
-            this.menuItem59.Index = 4;
-            this.menuItem59.Text = "&Select All";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -617,12 +577,6 @@
         private System.Windows.Forms.MenuItem menuItem52;
         private System.Windows.Forms.MenuItem menuItem53;
         private System.Windows.Forms.MenuItem menuItem54;
-        private System.Windows.Forms.ContextMenu contextMenu1;
-        private System.Windows.Forms.MenuItem menuItem55;
-        private System.Windows.Forms.MenuItem menuItem56;
-        private System.Windows.Forms.MenuItem menuItem57;
-        private System.Windows.Forms.MenuItem menuItem58;
-        private System.Windows.Forms.MenuItem menuItem59;
     }
 }
 
