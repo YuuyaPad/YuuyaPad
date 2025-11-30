@@ -26,7 +26,14 @@ namespace YuuyaPad
 
         private const int WM_PASTE = 0x0302;
 
+        public RichTextBox Editor => richTextBox1;
+
         public FindDialog sf = null;
+
+        private int lastSearchIndex = -1;
+        private string lastSearchText = "";
+        public bool lastSearchWrap = false;
+        private RichTextBoxFinds lastSearchFlag = RichTextBoxFinds.None;
 
         private Font currentFont;
 
@@ -683,37 +690,86 @@ namespace YuuyaPad
 
         private void menuItem41_Click(object sender, EventArgs e)
         {
-            // If it's already open, just bring it forward
-            if (findDialog != null && !findDialog.IsDisposed)
+            // Find
+            if (findDialog == null || findDialog.IsDisposed)
             {
-                findDialog.WindowState = FormWindowState.Normal;
-                findDialog.Activate(); // Bring to front in main form
+                findDialog = new FindDialog(this);
+
+                findDialog.StartPosition = FormStartPosition.Manual;
+                findDialog.Location = new Point(
+                    this.Location.X + (this.Width - findDialog.Width) / 2,
+                    this.Location.Y + (this.Height - findDialog.Height) / 2
+                );
+
+                findDialog.FormClosed += (s, args) => findDialog = null;
+                findDialog.Show(this);
+            }
+            else
+            {
+                findDialog.Activate();
+            }
+        }
+
+        public bool FindNext()
+        {
+            if (string.IsNullOrEmpty(lastSearchText))
+                return false;
+
+            RichTextBoxFinds flags = lastSearchFlag;
+            int start = richTextBox1.SelectionStart + richTextBox1.SelectionLength;
+
+            // First search from current location
+            int index = richTextBox1.Find(lastSearchText, start, flags);
+
+            if (index >= 0)
+            {
+                richTextBox1.Select(index, lastSearchText.Length);
+                richTextBox1.ScrollToCaret();
+                this.Activate();
+                return true;
+            }
+
+            // If not found, search from the beginning if wrap search is ON
+            if (lastSearchWrap)
+            {
+                index = richTextBox1.Find(lastSearchText, 0, flags);
+
+                if (index >= 0)
+                {
+                    richTextBox1.Select(index, lastSearchText.Length);
+                    richTextBox1.ScrollToCaret();
+                    this.Activate();
+                    return true;
+                }
+            }
+
+            // If you still can't find it
+            MessageBox.Show($"Cannot find '{lastSearchText}'","YuuyaPad - Find",MessageBoxButtons.OK,MessageBoxIcon.Information);
+            return false;
+        }
+
+
+        public void SetSearchParams(string text, RichTextBoxFinds flags)
+        {
+            if (string.IsNullOrEmpty(text))
+            {
+                lastSearchText = "";
+                lastSearchFlag = RichTextBoxFinds.None;
+                lastSearchIndex = -1;
                 return;
             }
 
-            // Create New
-            findDialog = new FindDialog
-            {
-                Owner = this,  // Set owner (this will bring it to the forefront in the app)
-                StartPosition = FormStartPosition.CenterParent
-            };
+            lastSearchText = text;
+            lastSearchFlag = flags;
 
-            // Set back to null when closed
-            findDialog.FormClosed += (s, e2) => findDialog = null;
-
-            findDialog.Show(this);
-        }
-
-        private void FindNext(string searchText)
-        {
-            // Write Find Next Process here
+            // Start searching just before the current selection
+            lastSearchIndex = Math.Max(0, richTextBox1.SelectionStart - 1);
         }
 
         private void menuItem42_Click(object sender, EventArgs e)
         {
             // Find Next
-            Placeholder();
-            //FindNext();
+            FindNext();
         }
 
         private void menuItem43_Click(object sender, EventArgs e)
@@ -1074,6 +1130,42 @@ namespace YuuyaPad
                     selectAll.Enabled = richTextBox1.TextLength > 0;
                 }
             };
+        }
+
+        public bool FindText(string text, bool matchCase, bool wrap, bool wholeWord)
+        {
+            if (string.IsNullOrEmpty(text))
+                return false;
+
+            RichTextBoxFinds options = RichTextBoxFinds.None;
+
+            if (matchCase)
+                options |= RichTextBoxFinds.MatchCase;
+
+            if (wholeWord)
+                options |= RichTextBoxFinds.WholeWord;
+
+            int startPos = richTextBox1.SelectionStart + richTextBox1.SelectionLength;
+
+            // First, search downwards from the current position
+            int index = richTextBox1.Find(text, startPos, options);
+
+            // Not found -> If wrap is enabled, search from the beginning
+            if (index == -1 && wrap)
+            {
+                index = richTextBox1.Find(text, 0, options);
+            }
+
+            // Not Found
+            if (index == -1)
+                return false;
+
+            // Select the location where it was found
+            richTextBox1.SelectionStart = index;
+            richTextBox1.SelectionLength = text.Length;
+            richTextBox1.ScrollToCaret();
+
+            return true;
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)

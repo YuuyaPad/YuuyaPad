@@ -52,6 +52,7 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(248, 19);
             this.textBox1.TabIndex = 1;
+            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // checkBox1
             // 
@@ -81,6 +82,7 @@
             this.button1.TabIndex = 5;
             this.button1.Text = "&Search";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
@@ -121,6 +123,7 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.Text = "Find";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FindDialog_KeyDown);
             this.ResumeLayout(false);
             this.PerformLayout();
 
