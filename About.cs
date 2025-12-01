@@ -16,7 +16,7 @@ namespace YuuyaPad
         {
             // Configure the About Dialog
             string ProgramName = "YuuyaPad"; // Program Name
-            string Version = "1.0"; // Version
+            string Version = "0.5"; // Version
             string Copyright = "Copyright © 2020-2025 Yuuya"; // Copyright
             string License = "This application is licensed under the MIT license."; // License
             string arch = RuntimeInformation.ProcessArchitecture.ToString(); // Architecture
