@@ -1015,6 +1015,8 @@ namespace YuuyaPad
             this.Text = name + (isModified ? "*" : "") + " - YuuyaPad";
 #endif
 
+            GetRunAdmin();
+
             isInternalUpdate = false;
         }
 
