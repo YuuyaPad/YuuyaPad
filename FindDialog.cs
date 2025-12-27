@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using YuuyaPad.Utils;
 
 namespace YuuyaPad
 {
@@ -78,6 +79,11 @@ namespace YuuyaPad
                 e.Handled = true;
                 e.SuppressKeyPress = true;
             }
+        }
+
+        private void FindDialog_Load(object sender, EventArgs e)
+        {
+            SystemMenuHelper.KeepMoveAndCloseOnly(this);
         }
     }
 }

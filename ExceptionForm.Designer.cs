@@ -101,6 +101,7 @@ namespace CustomExceptionApp
             this.Name = "ExceptionForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Exception occurred";
+            this.Load += new System.EventHandler(this.ExceptionForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

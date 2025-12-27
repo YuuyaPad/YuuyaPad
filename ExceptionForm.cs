@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using YuuyaPad.Utils;
 
 namespace CustomExceptionApp
 {
@@ -43,6 +44,11 @@ namespace CustomExceptionApp
         private void btnClose_Click(object sender, EventArgs e)
         {
             this.Close(); // Ignore the exception and continue
+        }
+
+        private void ExceptionForm_Load(object sender, EventArgs e)
+        {
+            SystemMenuHelper.KeepMoveAndCloseOnly(this);
         }
     }
 }

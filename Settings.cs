@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using YuuyaPad.Utils;
 
 namespace YuuyaPad
 {
@@ -69,7 +70,7 @@ namespace YuuyaPad
 
         private void Settings_Load(object sender, EventArgs e)
         {
-
+            SystemMenuHelper.KeepMoveAndCloseOnly(this);
         }
 
         public void InitSettings(string currentSearchEngine = "Google")

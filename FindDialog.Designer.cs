@@ -123,6 +123,7 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.Text = "Find";
+            this.Load += new System.EventHandler(this.FindDialog_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FindDialog_KeyDown);
             this.ResumeLayout(false);
             this.PerformLayout();

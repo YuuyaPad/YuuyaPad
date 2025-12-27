@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using YuuyaPad.Utils;
 
 namespace YuuyaPad
 {
@@ -40,6 +41,11 @@ label2.Text = $"Version {Version} [{arch}, Debug]";
         {
             // Close
             this.Close();
+        }
+
+        private void About_Load(object sender, EventArgs e)
+        {
+            SystemMenuHelper.KeepMoveAndCloseOnly(this);
         }
     }
 }
