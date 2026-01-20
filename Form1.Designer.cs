@@ -428,6 +428,7 @@
             // menuItem17
             // 
             this.menuItem17.Index = 0;
+            this.menuItem17.Shortcut = System.Windows.Forms.Shortcut.CtrlP;
             this.menuItem17.Text = "&Settings...";
             this.menuItem17.Click += new System.EventHandler(this.menuItem17_Click);
             // 
